@@ -1,0 +1,61 @@
+#header_div{
+	background-color: #2C5050;
+	width: 100%;
+	margin-bottom: 32px;
+	color:white;
+}
+#titulo{
+	font-size: 50px;
+}
+#boton_menu {
+    margin-left: 46px;
+    margin-top: 0px;
+    margin-bottom: 12px;
+}
+#icono_user{
+	font-size: 35px;
+	margin-top: 15px;
+	float: right;
+	margin-right: 20px;
+}
+#icono_user:hover{
+	color:steelblue;
+}
+#comboBox {
+	margin-top: 15px;
+	margin-right: 20px;
+	float: right;
+}
+/*El bot�n para desplegar*/
+.ui-selectonemenu-trigger {
+    background: #c5d2c9;
+}
+/*El border de lo que se despliega*/
+.ui-selectonemenu-panel .ui-selectonemenu-list {
+	padding: 1;
+    border: 0 none;
+    background-color: white;
+}
+/*El contenido de lo que se despliega*/
+.ui-selectonemenu-panel .ui-selectonemenu-list-item {
+    color: black;
+    background: white;
+}
+/*hovers*/
+.ui-selectonemenu-panel .ui-selectonemenu-list-item:hover {
+    background-color: steelblue; 
+}
+.ui-selectonemenu-panel .ui-selectonemenu-list:hover {
+	padding: 1;
+    border: 0 none;
+    background-color: steelblue;
+}
+.ui-selectonemenu .ui-selectonemenu-label {
+    display: block;
+    border: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: normal;
+    width: 110%;
+    text-align: left;
+}

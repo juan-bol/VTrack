@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<!-- Esto es el header que se mostrará cuando el usuario ingrese a la app, es decir, después de login -->
+	<ui:composition>
+
+		<div id="header_div">
+
+			<div>
+				<!-- Una fila -->
+				<div class="row">
+
+					<!-- Primera columna - el botón del menu -->
+					<div class="col" id="boton_menu">
+						<div>
+							<button class="btn btn-outline-secondary"
+								onclick="abrir_cerrar()">
+								<i class="fas fa-bars"></i> Menu
+							</button>
+						</div>
+					</div>
+
+					<!-- Segunda columna -->
+					<div class="col">
+						<h:form id="formHeader">
+							<p:growl id="growl" life="3000" />
+							<div id="comboBox">
+								<p:selectOneMenu id="menuPermisos"
+									value="#{headerInAppNB.idUsuSeleccionado}">
+									<f:selectItem 
+										itemValue="#{headerInAppNB.permisoSeleccionado.usuarioDestino.idUsuario}"
+										itemLabel="#{headerInAppNB.permisoSeleccionado.tipoPermiso eq 'A' ?  
+										headerInAppNB.permisoSeleccionado.usuarioDestino.nombre.concat(' ').concat(headerInAppNB.permisoSeleccionado.nombreCuenta) :
+										 headerInAppNB.permisoSeleccionado.nombreCuenta}" />
+										  
+									<f:selectItems value="#{headerInAppNB.listPermisos}" var="per"
+										itemValue="#{per.usuarioDestino.idUsuario}"
+										itemLabel="#{per.tipoPermiso eq 'A' ?  
+										per.usuarioDestino.nombre.concat(' ').concat(per.nombreCuenta) :
+										per.nombreCuenta}"/>
+										
+									<p:ajax listener="#{headerInAppNB.cambiarUsuarioImpersonate}"
+										update="growl" />
+									<p:ajax oncomplete="setTimeout(actualizarPagina, 1000)" />
+								</p:selectOneMenu>
+
+							</div>
+						</h:form>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	</ui:composition>
+</h:body>
+</html>

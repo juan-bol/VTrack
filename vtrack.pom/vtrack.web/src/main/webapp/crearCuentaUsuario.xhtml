@@ -1,0 +1,312 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+	<link rel="stylesheet" href="CSS/crearCuenta.css" />
+
+	<link rel="stylesheet" href="CSS/footer.css" />
+
+	<!-- css de bootstrap -->
+	<link rel="stylesheet" href="CSS/bootstrap.min.css" />
+
+	<!-- ÍCONOS FONT_AWESOME -->
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+		integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+		crossorigin="anonymous" />
+
+</h:head>
+<h:body>
+
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
+		<div class="container">
+
+			<div class="jumbotron jumbotron-fluid"
+				style="background-color: #3c77aa; padding: 5%;">
+				<div class="container">
+					<h1 class="display-4">Registrar Cuenta</h1>
+				</div>
+			</div>
+
+			<div id="infoExpres" class="container">
+				<h:panelGrid columns="2" cellpadding="5" id="ingresoExpres"
+					styleClass="container">
+
+					<p:outputLabel styleClass="campos" value="Correo electrónico*:"></p:outputLabel>
+					<p:inputText id="email" style="width:300px;font-size: 16px;"
+						value="#{crearCuentaUsuarioNB.correoElectronico}">
+
+						<p:ajax listener="#{crearCuentaUsuarioNB.habilitarCrearCuenta}"
+							update="boton_crear" />
+
+					</p:inputText>
+
+					<p:outputLabel styleClass="campos" value="Contraseña*:"></p:outputLabel>
+					<p:password id="contraseña" style="width:300px;font-size: 16px;"
+						value="#{crearCuentaUsuarioNB.contrasenia}" feedback="true"
+						promptLabel="Nivel de seguridad" weakLabel="Debil"
+						goodLabel="Intermedia" strongLabel="Fuerte">
+
+						<p:ajax listener="#{crearCuentaUsuarioNB.habilitarCrearCuenta}"
+							update="boton_crear" />
+
+					</p:password>
+
+
+					<p:outputLabel styleClass="campos" value="Confirmar contraseña*:"></p:outputLabel>
+					<p:password id="confirmar-contraseña"
+						style="width:300px;font-size: 16px;" feedback="true"
+						value="#{crearCuentaUsuarioNB.confirmarContrasenia}"
+						promptLabel="Nivel de seguridad" weakLabel="Debil"
+						goodLabel="Intermedia" strongLabel="Fuerte">
+
+						<p:ajax listener="#{crearCuentaUsuarioNB.habilitarCrearCuenta}"
+							update="boton_crear" />
+
+					</p:password>
+
+
+					<p:watermark for="email" value="Ingresar correo electrónico" />
+				</h:panelGrid>
+			</div>
+
+		</div>
+
+		<p:accordionPanel id="accordion" multiple="true"
+			styleClass="container" style="margin-bottom:20px;">
+			<p:tab id="tab1" title="Información personal">
+
+				<div id="informacionCuenta">
+					<div id="card" class="card-body ui-g">
+						<div id="infoPersonal" class="ui-g-6">
+
+							<h:panelGrid id="panel" columns="2" cellpadding="5">
+
+
+								<p:outputLabel value="Nombre: "></p:outputLabel>
+								<p:inputText id="nombre" placeholder="Ingresar nombre"
+									style="width:300px;font-size: 16px;margin-left: 33px;"
+									value="#{crearCuentaUsuarioNB.nombre}">
+
+									<p:ajax listener="#{crearCuentaUsuarioNB.habilitarCrearCuenta}"
+										update="form:boton_crear" />
+
+								</p:inputText>
+
+								<p:outputLabel value="Género: "></p:outputLabel>
+								<p:selectOneMenu id="sexo" value="#{crearCuentaUsuarioNB.sexo}"
+									lazy="true"
+									style="width:300px;font-size: 16px;margin-left: 33px;">
+
+									<p:ajax listener="#{crearCuentaUsuarioNB.habilitarCrearCuenta}"
+										update="form:boton_crear" />
+
+									<f:selectItem itemLabel="Ingresar género" itemValue="" />
+									<f:selectItems value="#{crearCuentaUsuarioNB.lstGeneros}" />
+								</p:selectOneMenu>
+
+
+								<p:outputLabel id="mensaje-numero2"
+									style="font-size: 16px;margin-left: 33px;"
+									rendered="#{crearCuentaUsuarioNB.render_numero}" value=""></p:outputLabel>
+								<p:outputLabel id="mensaje-numero1"
+									style="font-size: 16px;
+										background-color: #f8b7bd;
+										margin-left: 15px;
+										text-align: center;
+										height: 35px;
+										border: 0 none;
+    									color: #212121;
+										margin-top: 2%;"
+									rendered="#{crearCuentaUsuarioNB.render_numero}"
+									value="#{crearCuentaUsuarioNB.marcaAgua_tipo}">
+									<i class="fa fa-info-circle"
+										style="font-size: larger; margin-top: inherit;"></i>
+								</p:outputLabel>
+
+
+								<p:outputLabel value="Tipo documento: "></p:outputLabel>
+								<p:selectOneMenu id="tipo-documento"
+									value="#{crearCuentaUsuarioNB.tipoDocumento}" lazy="true"
+									style="width:300px;
+										font-size: 16px;
+										margin-left: 33px; ">
+
+									<p:ajax listener="#{crearCuentaUsuarioNB.activar_numero}"
+										update="form:accordion" />
+
+									<f:selectItem itemLabel="Ingresar tipo documento"
+										itemValue="-99999" />
+									<f:selectItems
+										value="#{crearCuentaUsuarioNB.listaTipoDocumento}" var="tipo"
+										itemValue="#{tipo.idTipoDocPais}"
+										itemLabel="#{tipo.tipoDocumento.nombre}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel id="mensaje-tipo2"
+									style="font-size: 16px;margin-left: 33px;"
+									rendered="#{crearCuentaUsuarioNB.render_tipo}" value=""></p:outputLabel>
+								<p:outputLabel id="mensaje-tipo1"
+									style="font-size: 16px;
+										background-color: #f8b7bd;
+										margin-left: 15px;
+										text-align: center;
+										height: 35px;
+										border: 0 none;
+    									color: #212121;
+										margin-top: 2%;"
+									rendered="#{crearCuentaUsuarioNB.render_tipo}"
+									value="#{crearCuentaUsuarioNB.marcaAgua_numero}">
+									<i class="fa fa-info-circle"
+										style="font-size: larger; margin-top: inherit;"></i>
+								</p:outputLabel>
+
+								<p:outputLabel value="Número documento: "></p:outputLabel>
+								<p:inputText id="num-documento" decimalPlaces="0"
+									placeholder="Ingresar número de documento"
+									value="#{crearCuentaUsuarioNB.numeroDocumento}"
+									style="width:300px;
+										font-size: 16px;
+										margin-left: 33px;">
+
+									<p:ajax listener="#{crearCuentaUsuarioNB.activar_tipo}"
+										update="form:accordion" />
+								</p:inputText>
+
+
+								<p:outputLabel value="Fecha nacimiento: "></p:outputLabel>
+								<p:calendar locale="es" navigator="true" yearRange="1920:2018"
+									pattern="dd-MM-yyyy" showOn="button" styleClass="calendario"
+									value="#{crearCuentaUsuarioNB.fechaNacimiento}"
+									placeholder="Ingresar fecha de nacimiento"
+									maxdate="#{crearCuentaUsuarioNB.hoy}"
+									style="font-size: 16px;margin-left: 33px;">
+
+									<p:ajax listener="#{crearCuentaUsuarioNB.habilitarCrearCuenta}"
+										update="form:boton_crear" />
+
+								</p:calendar>
+								<h:outputScript library="js" name="calendar_es.js" />
+
+							</h:panelGrid>
+						</div>
+
+						<div id="infoResidencia" class="ui-g-6">
+
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:outputLabel value="País: "></p:outputLabel>
+
+								<p:selectOneMenu id="paises"
+									value="#{crearCuentaUsuarioNB.pais}" lazy="true"
+									style="width:300px;font-size: 16px;margin-left: 33px;">
+
+									<p:ajax listener="#{crearCuentaUsuarioNB.seleccionarRegion}"
+										update="text-region region" />
+
+									<f:selectItem itemLabel="Ingresar país" itemValue="" />
+									<f:selectItems value="#{crearCuentaUsuarioNB.listaPaises}"
+										var="pais" itemValue="#{pais.idPais}"
+										itemLabel="#{pais.nombre}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel id="text-region"
+									value="#{crearCuentaUsuarioNB.textoRegion}"></p:outputLabel>
+								<p:selectOneMenu id="region"
+									value="#{crearCuentaUsuarioNB.region}" lazy="true"
+									style="width:300px;font-size: 16px;margin-left: 33px;">
+
+									<p:ajax listener="#{crearCuentaUsuarioNB.seleccionarCiudad}"
+										update="ciudad" />
+
+									<f:selectItem
+										itemLabel="#{crearCuentaUsuarioNB.textoCombobox_region}"
+										itemValue="" />
+									<f:selectItems value="#{crearCuentaUsuarioNB.listaRegiones}"
+										var="region" itemValue="#{region.idRegion}"
+										itemLabel="#{region.nombre}" />
+								</p:selectOneMenu>
+
+
+								<p:outputLabel value="Ciudad: "></p:outputLabel>
+								<p:selectOneMenu id="ciudad"
+									value="#{crearCuentaUsuarioNB.ciudad}" lazy="true"
+									style="width:300px;font-size: 16px;margin-left: 33px;">
+
+									<p:ajax listener="#{crearCuentaUsuarioNB.habilitarCrearCuenta}"
+										update="form:boton_crear" />
+
+									<f:selectItem itemLabel="Ingresar ciudad" itemValue="" />
+									<f:selectItems value="#{crearCuentaUsuarioNB.listaCiudades}"
+										var="ciudad" itemValue="#{ciudad.idCiudad}"
+										itemLabel="#{ciudad.nombre}" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Código postal: "></p:outputLabel>
+								<p:inputText id="codigo-postal"
+									placeholder="Ingresar código postal"
+									style="width:300px;font-size: 16px;margin-left: 33px;"
+									value="#{crearCuentaUsuarioNB.codigoPostal}">
+
+									<p:ajax listener="#{crearCuentaUsuarioNB.habilitarCrearCuenta}"
+										update="form:boton_crear" />
+
+								</p:inputText>
+
+							</h:panelGrid>
+						</div>
+
+					</div>
+				</div>
+			</p:tab>
+
+		</p:accordionPanel>
+
+
+		<div id="acciones">
+			<div id="btn-crear">
+
+				<p:commandButton id="boton_crear" styleClass="btn btn-success"
+					value="Crear Cuenta"
+					disabled="#{crearCuentaUsuarioNB.habilitarBoton}"
+					action="#{crearCuentaUsuarioNB.realizarRegistro}" update="form">
+				</p:commandButton>
+
+
+			</div>
+			<div id="btn-cancelar">
+				<p:commandButton styleClass="btn btn-danger" value="Cancelar"
+					action="#{crearCuentaUsuarioNB.redirigirLogin}" />
+			</div>
+
+		</div>
+
+
+		<p:dialog header="Registro" widgetVar="dlg_confirmar" closable="false"
+			resizable="false" modal="true" width="300" height="100"
+			position="center center">
+
+			<h:outputLabel value="Creaste tu cuenta satisfactoriamente" />
+
+			<p:commandButton value="Aceptar" style="color:white;background:green;"
+				action="#{crearCuentaUsuarioNB.redirigirPaginaEsquemasSugeridos}" />
+
+		</p:dialog>
+
+
+
+
+
+	</h:form>
+
+	<ui:include src="/facelets/footer.xhtml"></ui:include>
+
+	<!--script bootstrap-->
+	<script type="text/javascript" src="JS/bootstrap.min.js"></script>
+
+</h:body>
+</html>

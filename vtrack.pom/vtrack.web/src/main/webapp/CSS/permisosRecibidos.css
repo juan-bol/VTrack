@@ -1,0 +1,17 @@
+.repeat {
+	/* background: red; */
+	width: 79%;
+	margin-left: 7%;
+	/* text-align: center; */
+}
+
+.numeroPermisosRecibidos {
+	position: absolute;
+	margin-left: 10px;
+	font-weight: bold;
+	background-color: #9e5353;
+	width: 27px;
+	border-radius: 5px;
+	text-align: center;
+}
+

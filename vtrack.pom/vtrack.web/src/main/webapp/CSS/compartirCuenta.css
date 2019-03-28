@@ -1,0 +1,11 @@
+.botonEliminar {
+	background-color:red;
+	color: white;
+}
+
+.textoPermiso {
+    font-weight: bold;
+    font-size: 200px;
+    margin-left: 1%;
+    text-align: center;
+}

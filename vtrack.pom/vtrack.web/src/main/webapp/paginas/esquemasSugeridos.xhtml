@@ -1,0 +1,353 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<ui:composition template="/facelets/inAppTemplate.xhtml">
+		<ui:define name="content">
+
+			<h:form id="form">
+				<div id="container-esquemasSugeridos" class="container-fluid">
+					<h1 style="height: 110px;">Esquemas Sugeridos</h1>
+					<!-- Sección donde se le sugieren esquemas de otro pais -->
+					<div
+						class="row justify-content-between mx-0 p-4 shadow mb-5 bg-white rounded">
+						<div class="col-">
+							<h4>¿Deseas conocer esquemas sugeridos de otros países?</h4>
+						</div>
+						<div class="col-">
+							<p:commandButton value="Buscar" icon="fa fas fa-search"
+								update="menuPaises, growl" class="btn btn"
+								action="#{esquemasOtrosPaisesNB.mostrarDialogoEsquemasOtrosPaises}"
+								disabled="#{esquemasSugeridosNB.bloquer_funcionalidad}"
+								style="background-color:#56a5ff; font-weight:bold; color: white; width:162px;" />
+						</div>
+					</div>
+
+					<div style="min-height: 57.7%;">
+						<p:dataList value="#{esquemasSugeridosNB.listaEsq}" var="esquema"
+							type="definition"
+							emptyMessage="No hay esquemas sugeridos por mostrar">
+							<!-- Accordion esquemas sugeridos pais residencia -->
+							<div class="accordion" id="accordionExample">
+								<div class="card">
+									<div class="row justify-content-between card-header mx-0 pr-4"
+										id="headingOne">
+										<div class="col-">
+											<h5>
+												<button class="btn btn-link" type="button"
+													data-toggle="collapse"
+													data-target="##{esquema.identificador}"
+													aria-expanded="true" aria-controls="esquema.identificador">
+													<h4 class="my-0">#{esquema.esquema.nombre}</h4>
+												</button>
+												<p:growl id="growl" life="3000" />
+											</h5>
+										</div>
+										<div class="col-">
+											<p:commandButton
+												style="background-color:#28a745; height:43px"
+												value="Añadir al carné" update="growl, form"
+												action="#{esquemasSugeridosNB.agregarEsquemaVacunacion}"
+												icon="fa fas fa-plus" class="btn btn-success btn-sm"
+												disabled="#{esquemasSugeridosNB.bloquer_funcionalidad}">
+												<f:setPropertyActionListener
+													target="#{esquemasSugeridosNB.esquemaSeleccionado}"
+													value="#{esquema.esquema}" />
+											</p:commandButton>
+										</div>
+									</div>
+
+
+									<div id="#{esquema.identificador}" class="collapse show"
+										aria-labelledby="headingOne" data-parent="#accordionExample">
+										<div class="card-body">
+											<p class="text-center" style="font-size: 22px">
+												<strong>#{esquema.esquema.descripcion}</strong>
+											</p>
+
+											<p:dataTable var="columnasDosis" value="#{esquema.columnas}"
+												class="table table-hover rtable rtable--flip"
+												style=" width: 100%">
+
+												<!--   Columna nombre vacuna-->
+												<p:column class="landita" headerText="Dosis o Refuerzo"
+													style="color: black !important">
+
+													<h:outputText value="#{columnasDosis[0].nombreVacuna}" />
+
+												</p:column>
+
+												<!-- Columnas creadas dinámicamente -->
+
+												<p:columns value="#{esquema.cabeceras}"
+													columnIndexVar="colIndex" var="cabecera">
+													<f:facet name="header">
+														<h:outputText value="#{cabecera.nombre}" />
+
+													</f:facet>
+													<div id="dosis">
+
+														<!-- Se crea un panelgroup para evitar que los campos de algunas dosis que no corresponden a la vacuna de la fila, no se llene -->
+														<h:panelGroup
+															rendered="#{not empty columnasDosis[cabecera.posicion].dosis.diaAplicacion}">
+															<!-- Circulo de opcion para aplicar dosis-->
+															<p:commandButton styleClass="boton" value=""
+																style="width: 10px; margin-left: 50%;
+														background-color:black"
+																disabled="true" />
+
+															<div id="textTable">
+
+																<!-- Vacunas que se estiman de acuerdo a la fecha de aplicacion -->
+																<h:outputText value="#{columnasDosis[cabecera.posicion].ocurrenciaEsquemaSugeridos}"/>
+															
+															</div>
+														</h:panelGroup>
+													</div>
+												</p:columns>
+
+												<!-- COLUMNA DE ACCIONES -->
+												<p:column headerText="Acciones">
+													<!--   Columna botón de mostar inf -->
+													<p:commandButton update=":form:vacDetail"
+														onclick="PF('vacDialog').show()"
+														action="#{esquemasSugeridosNB.mostrarInformacionVacuna}"
+														icon="fa fa-info" title="View"
+														style="background-color:#56a5ff">
+														<f:setPropertyActionListener
+															target="#{esquemasSugeridosNB.vacunaTmp}"
+															value="#{columnasDosis[0].dosis.vacunaEsquema.vacuna}" />
+														<f:setPropertyActionListener
+															target="#{esquemasSugeridosNB.vacEsqTmp}"
+															value="#{columnasDosis[0].dosis.vacunaEsquema}" />
+													</p:commandButton>
+												</p:column>
+											</p:dataTable>
+										</div>
+									</div>
+								</div>
+							</div>
+						</p:dataList>
+					</div>
+				</div>
+
+				<!-- Dialogo detalle vacuna país de residencia -->
+				<p:dialog header="Información vacuna" id="tabla-modal"
+					widgetVar="vacDialog" modal="true" showEffect="fade"
+					hideEffect="fade" resizable="false" width="40%" position="500,200">
+					<p:outputPanel id="vacDetail" style="text-align:justify;"
+						columnClasses="label,value">
+
+
+						<h:outputText value="Nombre vacuna:  "
+							style="font-weight:bold; color:black" />
+						<h:outputText value="#{esquemasSugeridosNB.vacunaTmp.nombre}" />
+						<br />
+
+						<h:outputText value="Cantidad de dosis:  "
+							style="font-weight:bold; color:black" />
+						<h:outputText value="#{esquemasSugeridosNB.numDosis}" />
+						<br />
+
+						<h:outputText value="Cantidad de refuerzos:  "
+							style="font-weight:bold; color:black" />
+						<h:outputText value="Ninguna"
+							rendered="#{esquemasSugeridosNB.numRefuerzos == 0}" />
+						<h:outputText value="#{esquemasSugeridosNB.numRefuerzos} "
+							rendered="#{esquemasSugeridosNB.numRefuerzos > 0}" />
+						<br />
+
+						<h:outputText value="Información General: "
+							style="font-weight:bold; color:black" />
+						<h:outputText
+							value="#{esquemasSugeridosNB.vacunaTmp.vacunaDetalle.informacionGeneral}" />
+						<br />
+
+					</p:outputPanel>
+				</p:dialog>
+
+				<!-- Dialogo de esquemas sugeridos de otros paises -->
+				<p:dialog header="Esquemas sugeridos de otros paises"
+					widgetVar="countriesDialog" modal="true" showEffect="fade"
+					hideEffect="fade" resizable="false" width="90%" height="500px"
+					position="50,30">
+
+					<p:growl id="growl" life="3000" />
+
+					<div id="div-comboPaises"
+						class="row justify-content-start mx-1 my-3 shadow p-3 mb-2 bg-white rounded">
+						<p:selectOneMenu id="menuPaises"
+							value="#{esquemasOtrosPaisesNB.idPaisSeleccionado}">
+							<f:selectItem itemLabel="Seleccione un país" itemValue="-99999"></f:selectItem>
+							<f:selectItems value="#{esquemasOtrosPaisesNB.listPaises}"
+								var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.idPais}" />
+							<p:ajax
+								listener="#{esquemasOtrosPaisesNB.cambioPaisSeleccionado}"
+								update="listaEsquemas" />
+						</p:selectOneMenu>
+					</div>
+
+					<p:scrollPanel mode="native" style="height:80%;">
+						<div style="min-height: 57.7%;">
+							<p:dataList value="#{esquemasOtrosPaisesNB.listEsqOtrosPaises}"
+								var="esquema" type="definition" id="listaEsquemas"
+								emptyMessage="No hay esquemas sugeridos por mostrar">
+								<!-- Accordion esquemas otros paises -->
+								<div class="accordion" id="acdnEsqOtrosPaises">
+									<div class="card">
+										<div class="row justify-content-between card-header mx-0"
+											id="head-esqOtrosPaises">
+											<div class="col-">
+												<h5>
+													<button class="btn btn-link" type="button"
+														data-toggle="collapse"
+														data-target="##{esquema.identificador}"
+														aria-expanded="true" aria-controls="esquema.identificador">
+														<h4>#{esquema.esquema.nombre}</h4>
+													</button>
+													<p:growl id="growl" life="3000" />
+												</h5>
+											</div>
+											<div class="col-">
+												<p:commandButton
+													style="background-color:#28a745; height:43px;"
+													value="Añadir al carné" update="form"
+													action="#{esquemasOtrosPaisesNB.agregarEsquemaOtroPais}"
+													oncomplete="handleAgregarAlCarnet(xhr, status, args)"
+													icon="fa fas fa-plus" class="btn btn-success btn-sm mx-3">
+													<f:setPropertyActionListener
+														target="#{esquemasOtrosPaisesNB.esquemaSeleccionado}"
+														value="#{esquema.esquema}" />
+												</p:commandButton>
+											</div>
+										</div>
+										<!-- Contenido del accordion -->
+										<div id="#{esquema.identificador}" class="collapse show"
+											aria-labelledby="head-esqOtrosPaises"
+											data-parent="#acdnEsqOtrosPaises">
+											<div class="card-body">
+												<p class="text-center" style="font-size: 22px">
+													<strong>#{esquema.esquema.descripcion}</strong>
+												</p>
+
+												<p:dataTable var="columnasDosis" value="#{esquema.columnas}"
+													class="table table-hover rtable rtable--flip"
+													style=" width: 100%">
+
+													<!--   Columna nombre vacuna-->
+													<p:column styleClass="landita"
+														headerText="Dosis o Refuerzo"
+														style="color: black !important">
+														<h:outputText value="#{columnasDosis[0].nombreVacuna}" />
+													</p:column>
+
+													<!-- Columnas creadas dinámicamente -->
+													<p:columns value="#{esquema.cabeceras}"
+														columnIndexVar="colIndex" var="cabecera">
+														<f:facet name="header">
+															<h:outputText value="#{cabecera.nombre}" />
+														</f:facet>
+														<div id="dosis">
+
+															<!-- Se crea un panelgroup para evitar que los campos de algunas dosis que no corresponden a la vacuna de la fila, no se llene -->
+															<h:panelGroup
+																rendered="#{not empty columnasDosis[cabecera.posicion].dosis.diaAplicacion}">
+																<!-- Circulo de opcion para aplicar dosis-->
+																<p:commandButton styleClass="boton" value=""
+																	style="width: 10px; margin-left: 50%;
+														background-color:black"
+																	disabled="true" />
+
+																<div id="textTable">
+
+																	<!-- Vacunas que se estiman de acuerdo a la fecha de aplicacion -->
+																	<h:outputText value="#{columnasDosis[cabecera.posicion].ocurrenciaEsquemaSugeridos}"/>
+
+
+																</div>
+															</h:panelGroup>
+														</div>
+													</p:columns>
+
+													<!-- COLUMNA DE ACCIONES -->
+													<p:column headerText="Acciones">
+														<!--   Columna botón de mostrar inf -->
+														<p:commandButton update=":form:vacOtroPaisDetail"
+															oncomplete="PF('vacDialogOtrosPaises').show()"
+															action="#{esquemasOtrosPaisesNB.mostrarInformacionVacuna}"
+															icon="fa fa-info" title="Ver detalle de vacuna"
+															style="background-color:#56a5ff">
+															<f:setPropertyActionListener
+																target="#{esquemasOtrosPaisesNB.vacunaTmp}"
+																value="#{columnasDosis[0].dosis.vacunaEsquema.vacuna}" />
+															<f:setPropertyActionListener
+																target="#{esquemasOtrosPaisesNB.vacEsqTmp}"
+																value="#{columnasDosis[0].dosis.vacunaEsquema}" />
+														</p:commandButton>
+													</p:column>
+												</p:dataTable>
+											</div>
+										</div>
+									</div>
+								</div>
+							</p:dataList>
+						</div>
+					</p:scrollPanel>
+				</p:dialog>
+
+				<!-- Dialogo información vacuna otros países -->
+				<p:dialog header="Información vacuna" id="tabla-modal-otrosPaises"
+					widgetVar="vacDialogOtrosPaises" modal="true" showEffect="fade"
+					hideEffect="fade" resizable="false" width="40%" position="500, 200">
+					<p:outputPanel id="vacOtroPaisDetail" style="text-align:justify;"
+						columnClasses="label,value">
+
+						<h:outputText value="Nombre vacuna:  "
+							style="font-weight:bold; color:black" />
+						<h:outputText value="#{esquemasOtrosPaisesNB.vacunaTmp.nombre}" />
+						<br />
+
+						<h:outputText value="Cantidad de dosis:  "
+							style="font-weight:bold; color:black" />
+						<h:outputText value="#{esquemasOtrosPaisesNB.numDosis}" />
+						<br />
+
+						<h:outputText value="Cantidad de refuerzos:  "
+							style="font-weight:bold; color:black" />
+						<h:outputText value="Ninguna"
+							rendered="#{esquemasOtrosPaisesNB.numRefuerzos == 0}" />
+						<h:outputText value="#{esquemasOtrosPaisesNB.numRefuerzos} "
+							rendered="#{esquemasOtrosPaisesNB.numRefuerzos > 0}" />
+						<br />
+
+						<h:outputText value="Información General: "
+							style="font-weight:bold; color:black" />
+						<h:outputText
+							value="#{esquemasOtrosPaisesNB.vacunaTmp.vacunaDetalle.informacionGeneral}" />
+						<br />
+
+					</p:outputPanel>
+				</p:dialog>
+			</h:form>
+
+			<!-- Script que se encarga de mantener abierto el dialogo cuando se agrega un esquema al carnet -->
+			<script type="text/javascript">
+			 function handleAgregarAlCarnet(xhr, status, args){
+				 if (!args.validationFailed) {
+					 PF('countriesDialog').show();
+				 } else {
+					 PF('countriesDialog').show();
+				 }
+			 }
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

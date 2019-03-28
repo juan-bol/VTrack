@@ -1,0 +1,221 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/facelets/inAppTemplate.xhtml">
+		<ui:define name="content">
+
+			<h:form id="form">
+				<p:growl id="growl" life="3000" />
+
+				<!-- TÍTULO DE LA PÁGINA -->
+				<div class="container-fluid">
+					<p:outputPanel deferred="true"
+						style=" margin-bottom: 20px; 
+        background-color: #3c77aa; padding: 25px 0px;">
+						<h3
+							style="text-align: center; font-size: 50; font-weight: 300 !important; color: white"
+							id="cmpartir">Compartir Carné</h3>
+					</p:outputPanel>
+
+					<!-- Mensaje que se muestra cuando se cambia de usuario y el mismo es impersonate -->
+					<p:outputPanel rendered="#{!compartirCarneNB.usuLogueado}">
+
+						<div class="row"
+							style="text-align: center; font-weight: bold; font-size: 20px; border: solid 2px; margin: 7% 0 18% 0; padding: 20px">
+
+							<div class="col" style="max-width: 20%; text-align: right;">
+								<i class="fas fa-info-circle"
+									style="font-size: 60px; color: steelblue"></i>
+							</div>
+
+							<div class="col" style="max-width: 80%; padding-top: 15px;">
+								<p:outputLabel
+									value="Esta funcionalidad no está disponible al cambiar de usuario" />
+							</div>
+
+						</div>
+					</p:outputPanel>
+
+					<!-- SUBSECCIÓN DONDE SE CONCEDEN PERMISOS -->
+					<p:outputPanel deferred="true"
+						rendered="#{compartirCarneNB.usuLogueado}"
+						styleClass="shadow p-3 bg-white rounded">
+
+						<div class="row align-items-center justify-content-between"
+							style="margin-top: 10px">
+							<!-- Grupo etiquetas, correo, comboBox -->
+							<div class="col- mx-3">
+								<div class="row align-items-center">
+									<!-- Columna de la etiqueta "Conceder a la cuenta" -->
+									<div class="col- mr-2"
+										style="margin-left: 20px; max-width: 190px">
+										<h:outputLabel styleClass="my-0">Conceder a la cuenta</h:outputLabel>
+									</div>
+
+									<!-- Columna del campo de correo -->
+									<div class="col- mr-2">
+										<p:inputText id="correo" styleClass="campoCorreo"
+											value="#{compartirCarneNB.correoIngresado}">
+											<p:ajax event="keyup" update="botonConceder"></p:ajax>
+										</p:inputText>
+										<p:watermark for="correo" value="Ej: juan@ejemplo.com"></p:watermark>
+									</div>
+
+									<!-- Columna de etiqueta "permiso de" -->
+									<div class="col- mr-2">
+										<h:outputLabel styleClass="my-0">permiso de</h:outputLabel>
+									</div>
+
+									<!-- Columna del comboBox de permisos -->
+									<div class="col- mr-2" style="text-align: left">
+										<p:selectOneMenu
+											value="#{compartirCarneNB.tipoPermisoSeleccionadoConceder}"
+											style="min-width: 157px;">
+											<f:selectItem itemLabel="Lectura"
+												itemValue="#{compartirCarneNB.tipoLectura}" />
+											<f:selectItem itemLabel="Lectura y Escritura"
+												itemValue="#{compartirCarneNB.tipoEscritura}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+							</div>
+
+							<!-- Columna del boton Conceder -->
+							<div class="col-" style="text-align: right; padding-right: 2%">
+								<p:commandButton id="botonConceder" value="Conceder"
+									disabled="#{compartirCarneNB.correoIngresado.length() == 0}"
+									style="background: #28a745;color:white; height:35px;"
+									action="#{compartirCarneNB.concederPermisoAPorCorreo}"
+									update="listaPermisosConcedidos, growl, form">
+									<!-- <p:ajax oncomplete="setTimeout(actualizarPagina, 6000)" />  -->
+								</p:commandButton>
+							</div>
+						</div>
+					</p:outputPanel>
+
+					<!-- Mensaje que se muestra cuando la lista de permisos concedidos es vacia-->
+					<p:outputPanel
+						rendered="#{empty compartirCarneNB.listaPermisos and compartirCarneNB.usuLogueado}">
+
+						<div class="row"
+							style="text-align: center; font-weight: bold; font-size: 20px; border: solid 2px; margin: 7% 0 9% 0; padding: 20px">
+
+							<div class="col" style="max-width: 20%; text-align: right;">
+								<i class="fas fa-info-circle"
+									style="font-size: 60px; color: steelblue"></i>
+							</div>
+							<div class="col" style="max-width: 80%; padding-top: 15px;">
+								<p:outputLabel value="No ha concedido permisos actualmente" />
+							</div>
+
+						</div>
+					</p:outputPanel>
+
+
+					<!-- SUBSECCIÓN DONDE SE MUESTRAN LOS PERMISOS QUE HE CONCEDIDO -->
+					<p:outputPanel
+						rendered="#{not empty compartirCarneNB.listaPermisos and compartirCarneNB.usuLogueado}">
+						<div class="row justify-items-center mx-3">
+							<div class="col-">
+								<p:outputLabel style="font-size: 20px;margin-top:25px"
+									styleClass="textoPermiso">¿Quién tiene permiso?</p:outputLabel>
+							</div>
+						</div>
+						<div
+							style="overflow-y: scroll; overflow-x: hidden; height: 45%; margin-top: 10px;">
+							<p:repeat styleClass="repeat" id="listaPermisosConcedidos"
+								value="#{compartirCarneNB.listaPermisos}" var="permiso">
+								<hr />
+								<div class="row mx-1">
+									<div class="col ml-0"
+										style="margin-bottom: 10px; margin-left: 1%;">
+										<p:outputLabel value="#{permiso.usuarioOrigen.nombre}"
+											rendered="#{permiso.usuarioOrigen.nombre != null}" />
+										<p:outputLabel value="#{permiso.usuarioOrigen.cuenta.correo}" />
+									</div>
+
+									<!-- Columna del comboBox para modificar permiso -->
+									<div class="col pr-4" style="text-align: right">
+										<p:selectOneMenu value="#{permiso.tipoPermiso}"
+											style="min-width: 157px;">
+											<f:selectItem itemLabel="Lectura"
+												itemValue="#{compartirCarneNB.tipoLectura}" />
+											<f:selectItem itemLabel="Lectura y Escritura"
+												itemValue="#{compartirCarneNB.tipoEscritura}" />
+
+											<!-- cuando se selecciona otro tipo de permiso lo agrega en una lista del NB -->
+											<p:ajax
+												listener="#{compartirCarneNB.cambiarTipoPermisoConcedido(permiso)}"
+												update="form:growl" />
+										</p:selectOneMenu>
+									</div>
+
+									<div class="col pr-3"
+										style="text-align: right; max-width: 70px; padding-right: 20px">
+										<p:commandButton icon="fa fas fa-times-circle"
+											styleClass="botonEliminar"
+											oncomplete="PF('confirmarDialogo').show()"
+											update="form:growl">
+											<f:setPropertyActionListener
+												target="#{compartirCarneNB.permisoABorrar}"
+												value="#{permiso}" />
+										</p:commandButton>
+									</div>
+								</div>
+								<hr />
+							</p:repeat>
+						</div>
+						<div class="row justify-content-center">
+						<div class="col-">
+							<p:commandButton value="Guardar cambios"
+								style="background: #28a745; color: white; height:35px;"
+								action="#{compartirCarneNB.guardarCambios}" update="growl"/>
+						</div>
+					</div>
+					</p:outputPanel>
+
+				</div>
+
+				<!-- dialogo de confirmar borrar el permiso-->
+				<p:dialog header="Borrar Permiso" widgetVar="confirmarDialogo"
+					position="top" resizable="false" width="250" height="100"
+					modal="true" showEffect="fade" hideEffect="fade">
+
+					<div class="row">
+						<div class="col">
+							<h:outputLabel
+								value="¿Está seguro que desea eliminar el permiso seleccionada?" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-" style="position: relative; left: 18%;">
+							<p:commandButton value="Sí" update="form"
+								style="background-color: #46CE73; margin: 12.5px"
+								action="#{compartirCarneNB.eliminarPermisoConcedido()}">
+
+								<p:ajax oncomplete="setTimeout(actualizarPagina, 1000)" />
+
+							</p:commandButton>
+							<p:commandButton value="No"
+								action="#{compartirCarneNB.cerrarConfirmacion}"
+								style="background-color: #FF3D3D; margin: 12.5px;" />
+						</div>
+					</div>
+				</p:dialog>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

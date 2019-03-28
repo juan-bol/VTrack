@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+	<title>V-Track - Inicio</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+	<!-- css del LandingPage -->
+	<link rel="stylesheet" href="CSS/landingPage.css" />
+
+	<!-- css del footer -->
+	<link rel="stylesheet" href="CSS/footer.css" />
+	
+	<!-- css de bootstrap -->
+    <link rel="stylesheet" href="../CSS/bootstrap.min.css"/>
+
+</h:head>
+
+<h:body id="Medio_Informacion">
+
+
+	<!-- Header de la página index -->
+	<h:form>
+		<p:menubar class="fixed-top">
+
+			<f:facet name="options">
+
+				<h:panelGrid columns="2" cellpadding="5"
+					styleClass="header-informacion">
+
+					
+					<b:commandButton class="btn btn-success"
+						style="width: 115%; font-size: 127%; margin-top: 5%;   margin-left: -85%; "
+						value="Regístrate" action="#{indexNB.redirigirRegistro}" />
+				</h:panelGrid>
+
+			</f:facet>
+		</p:menubar>
+	</h:form>
+
+
+
+	<!--    Modal Login  Emergente   -->
+
+	<!-- End Dialogo Emergente -->
+
+
+	<!-- Contenido que aprece en medio de la página index -->
+	<div id="contenido-medio">
+		<div id="Acción">
+			<p class="font-weight-bold">Vtrack-Una app para mantener la información de tus vacunas.</p>
+		</div>
+
+		<div id="imagen_vacuna">
+
+			<p:panel id="basic" header="Ingresa a tu cuenta"
+				style="margin-bottom:20px;     width: 40%;  margin-left: 44%; height: 37%; text-aling:center">
+
+				<h:form id="login">
+					<p:growl id="msgs" life="2000" />
+
+					<h:panelGrid columns="2" cellpadding="5" id="ingresoExpres"
+						style="display:inline-grid;width:500px;margin-left:-18%;">
+
+						<p:outputLabel for="exampleInputEmail1">Correo:</p:outputLabel>
+						<p:inputText type="email" id="exampleInputEmail1"
+							aria-describedby="emailHelp" value="#{indexNB.correo}"
+							placeholder="Ingrese el correo" />
+
+
+						<p:outputLabel for="exampleInputPassword1">Contraseña:</p:outputLabel>
+						<p:password type="password" id="exampleInputPassword1"
+							placeholder="Contraseña" value="#{indexNB.password}" />
+
+					</h:panelGrid>
+
+					<p:commandButton id="Logueo" value="Ingresar"
+						class="btn btn-success" action="#{indexNB.validarSesionUsuario}"
+						update="msgs">
+					</p:commandButton>
+				</h:form>
+
+			</p:panel>
+
+
+
+		</div>
+
+
+	</div>
+	<img
+		src="https://www.primefaces.org/eos/javax.faces.resource/sentinel-layout/images/avatar1.svg.xhtml?ln=sentinel" />
+
+	<!-- Footer - parte inferior  -->
+	<ui:include src="/facelets/footer.xhtml"></ui:include>
+	
+	<!--script bootstrap-->
+	<script type="text/javascript" src="JS/bootstrap.min.js"></script>
+
+</h:body>
+</html>

@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	
+</h:head>
+<h:body>
+	<ui:composition>
+		<div style="text-align: right">
+			<button class="btn btn-outline-secondary" style="color: white"
+				onclick="abrir_cerrar()">
+				<i class="fas fa-angle-double-left"></i>
+			</button>
+		</div>
+		<div class="sidebar-header" id="sidebar-header">Menú</div>
+		<!-- Esto es el menú que muestra la información (debería mostrar la información dependiendo de quién está logeado)-->
+		<p:dataList value="#{menuNB.listaMenu}" var="menu" type="definition" styleClass="tablaMenu">
+			<div class="sidebar-item">
+				<h:form>
+					<i class="#{menu.icono} mr-2"></i>
+					<p:growl id="growl" life="2000" />
+					<p:commandLink ajax="false" action="#{menuNB.menuSeleccionado}" disabled="#{menuNB.verificar(menu)}">
+						<h:outputText value="#{menu.nombre}"></h:outputText>
+						<f:setPropertyActionListener target="#{menuNB.paginaActualTmp}"
+							value="#{menu.nombre}" />
+					</p:commandLink>
+					<p:outputLabel style="color: white;" styleClass="numeroPermisosRecibidos" rendered="#{ (menuNB.listPermisosEspera.size() gt 0) and menuNB.usuLogueado and menu.idMenu eq menuNB.idPermisosRecibidos}" value="#{menuNB.listPermisosEspera.size()}"/>
+				</h:form>
+			</div>
+		</p:dataList>
+	</ui:composition>
+</h:body>
+</html>

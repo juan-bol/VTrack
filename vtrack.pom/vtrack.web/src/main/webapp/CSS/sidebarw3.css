@@ -1,0 +1,94 @@
+.sidebar{
+    background-color:#2c3e50;
+    color: white;
+    position:fixed!important;
+    z-index:1;
+    overflow:auto;
+    top: 0;
+    left: 0;
+    display: none;
+	
+    height:100%;
+    width:20%;
+
+    transition: all 0.3s !important;
+    
+}
+.sidebar-item{
+    display: block;
+    padding-top: 15px;
+    padding-left: 5px;
+    font-size: 14px;
+    font-weight: normal;
+}
+.sidebar-item:hover{
+    background-color: steelblue;
+}
+.sidebar-header{
+    text-align: center;
+    padding-top: 3%;
+    padding-bottom: 15px;
+    font-size: 26px;
+}
+.sidebar-header:hover{
+   color:steelblue;
+   font-weight: bold;
+}
+#contenido {
+    margin-left: 2%;
+    font-size: 14px;
+}
+.btn-outline-secondary {
+    margin-top: 1rem!important;
+    margin-right: 1rem!important;
+    color: white !important;
+    border-color: white !important;
+}
+.btn-outline-secondary:hover {
+    background-color: steelblue!important;
+}
+/*ESTO ES PARA CAMBIAR EL CSS DE PRIMEFACES*/
+.ui-widget-content{
+	/*background-color: #2c3e50;*/
+    color: white;
+    border: none;
+}
+.ui-widget-content a {
+    color: white;
+}
+.tablaMenu .ui-widget-content{
+	background-color: #2c3e50;	
+}
+ strong {
+    color: black;
+    font-weight: bolder;
+}
+/*CUANDO LA PANTALLA SE HACE MÃ�S PEQUEÃ‘A, LA LETRA DE SISTEMA SE HACE MÃ�S PEQUEÃ‘A*/
+@media (max-width: 1000px) {
+    .sidebar-header{
+        font-size: 24px;
+    }
+    .sidebar-item{
+        font-size: 12px;
+    }
+    #contenido {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 760px) {
+    .sidebar-header{
+        font-size: 26px;
+    }
+    .sidebar-item{
+        font-size: 14px;
+    }
+    #contenido {
+        font-size: 14px;
+    }
+}
+
+/*
+ES IGUAL A text-decoration: none
+list-style-type: none;
+*/

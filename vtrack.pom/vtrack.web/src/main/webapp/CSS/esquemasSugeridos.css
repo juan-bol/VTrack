@@ -1,0 +1,359 @@
+#btn-registrarDosis {
+	background-color: #2C3E50;
+}
+
+#div-seccionEsqSugOtrosPaises .ui-button .ui-button-text {
+	width: 130px;
+	height: 25px;
+}
+
+#container-esquemasSugeridos .px-4 {
+	padding-left: 1.8rem !important;
+	padding-right: 1.8rem !important;
+}
+
+#div-comboPaises .ui-selectonemenu {
+	width: 25%;
+}
+
+#div-comboPaises, .ui-selectonemenu-label {
+	width: 100%;
+}
+
+td.landita {
+    text-align: start !important;
+}
+.boton {
+	width: 5px;
+	height: 5px;
+	background-color: blue;
+	color: blue;
+	margin: 5px;
+	padding: 8px;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	font-size: 11px;
+	line-height: 32px;
+	text-transform: uppercase;
+	float: center;
+	margin-left: 25px;
+}
+
+.navbar-custom {
+	background-color: #2C3E50;
+	color: black;
+}
+
+/* Cambios de esquemas sugeridos con el menu incluido*/
+.container-fluid {
+	margin-top: -1% !important;
+	width: 100% !important;
+}
+
+button.btn.btn-primary.btn-sm {
+	margin-left: -17%;
+	width: 93%;
+}
+
+.ui-datatable tbody td {
+	border-color: black;
+	background: white;
+}
+
+td {
+	color: #232020;
+}
+
+span.ui-column-title {
+	color: black;
+}
+
+/* Cambios de esquemas sugeridos con el menu incluido*/
+.h1, h1 {
+	text-align: center !important;
+	color: #3e4844 !important;
+	font-size: 2.5rem;
+}
+
+.btn-link {
+	font-weight: 400;
+	color: #151c23 !important;
+	background-color: transparent;
+}
+
+html {
+	font-size: 1rem;
+}
+
+i.fas.fa-circle {
+	margin-left: 1%;
+}
+
+p {
+	letter-spacing: -1px;
+	margin-top: 0;
+	margin-bottom: 1rem;
+	text-align: justify;
+}
+
+.table th, .table td {
+	border: 1px solid #d9d7ce;
+	text-align: center;
+}
+
+@media screen and (max-width: 597px) {
+	.rtable {
+		/*!
+        // IE needs inline-block to position scrolling shadows otherwise use:
+        // display: block;
+        // max-width: min-content;
+        */
+		display: inline-block;
+		vertical-align: top;
+		max-width: 100%;
+		overflow-x: auto;
+		white-space: nowrap;
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+	.rtable, .rtable--flip tbody {
+		-webkit-overflow-scrolling: touch;
+		background: radial-gradient(left, ellipse, rgba(0, 0, 0, .2) 0%,
+			rgba(0, 0, 0, 0) 75%) 0 center,
+			radial-gradient(right, ellipse, rgba(0, 0, 0, .2) 0%,
+			rgba(0, 0, 0, 0) 75%) 100% center;
+		background-size: 10px 100%, 10px 100%;
+		background-attachment: scroll, scroll;
+		background-repeat: no-repeat;
+	}
+	.rtable td:first-child, .rtable--flip tbody tr:first-child {
+		background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 50%,
+			rgba(255, 255, 255, 0) 100%);
+		background-repeat: no-repeat;
+		background-size: 20px 100%;
+	}
+	.rtable td:last-child, .rtable--flip tbody tr:last-child {
+		background-image: linear-gradient(to left, rgba(255, 255, 255, 1) 50%,
+			rgba(255, 255, 255, 0) 100%);
+		background-repeat: no-repeat;
+		background-position: 100% 0;
+		background-size: 20px 100%;
+	}
+	.rtable th {
+		font-size: 11px;
+		text-align: left;
+		text-transform: uppercase;
+		background: #f2f0e6;
+	}
+	.rtable th, .rtable td {
+		padding: 6px 12px;
+		border: 1px solid #d9d7ce;
+	}
+	.rtable--flip {
+		display: flex;
+		overflow: hidden;
+		background: none;
+	}
+	.rtable--flip thead {
+		display: flex;
+		flex-shrink: 0;
+		min-width: min-content;
+	}
+	.rtable--flip tbody {
+		display: flex;
+		position: relative;
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+	.rtable--flip tr {
+		display: flex;
+		flex-direction: column;
+		min-width: min-content;
+		flex-shrink: 0;
+	}
+	.rtable--flip td, .rtable--flip th {
+		display: block;
+	}
+	.rtable--flip td {
+		background-image: none !important;
+		border-left: 0;
+	}
+	.rtable--flip
+	
+	 
+	
+	th
+	
+	
+	:not
+	
+	 
+	
+	(
+	:last-child
+	
+	 
+	
+	),
+	.rtable--flip
+	
+	 
+	
+	td
+	
+	
+	:not
+	
+	 
+	
+	(
+	:last-child
+	
+	 
+	
+	)
+	{
+	border-bottom
+	
+	
+	:
+	
+	 
+	
+	0;
+}
+
+th {
+	height: 62px;
+}
+
+.btn-primary {
+	width: 96% !important;
+}
+
+.container-fluid {
+	margin-top: 60px !important;
+	width: 100% !important;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+}
+
+/* Cambios de esquemas sugeridos con el menu incluido*/
+.container-fluid {
+	margin-top: -1% !important;
+	width: 100% !important;
+}
+
+button.btn.btn-primary.btn-sm {
+	margin-left: -17%;
+	width: 93%;
+}
+
+.ui-datatable tbody td {
+	border-color: black;
+	background: white;
+}
+
+div#nombre {
+	display: inline-block;
+}
+
+.fa-circle:before {
+	content: "\f111";
+	color: #252323;
+}
+
+/* color del texto dentro de las columnas*/
+td {
+	color: #2b2626;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: #3390f5;
+	border-color: #007bff;
+}
+
+div#dosis {
+	display: grid;
+}
+
+/* Cambios de esquemas sugeridos con el menu incluido*/
+@media screen and (max-width: 429px) {
+	h4 {
+		font-size: 79%;
+	}
+}
+
+/*---------------------- Cambios Recientes antes del Sprint 1 del miercoles--------------------------------*/
+
+/*  Color del boton aï¿½adir carnï¿½*/
+.ui-state-default, .ui-widget-content .ui-state-default,
+	.ui-state-default {
+	background-color: black;
+}
+
+div#textTable {
+	        margin-left: 4%;
+}
+
+/*Color del boton mï¿½s informaciï¿½n dentro de la tabla*/
+.ui-button-icon-only .ui-button-text {
+	padding: .3em;
+	text-indent: -9999999px;
+}
+
+/* color del modal */
+.ui-panelgrid .ui-panelgrid-cell {
+	border-width: 1px;
+	border-style: solid;
+	border-color: inherit;
+	padding: 4px 10px;
+	background: #bec2c7;
+}
+
+.ui-dialog .ui-dialog-content {
+	position: relative;
+	border: 0;
+	padding: .5em 1em;
+	background: white;
+	zoom: 1;
+	color: black;
+	width: auto;
+}
+
+.ui-draggable .ui-dialog-titlebar {
+	cursor: move;
+	background: white;
+}
+
+.ui-dialog .ui-dialog-title {
+	color: white;
+	float: left;
+	margin: .3em 16px .1em 0;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default,
+	.ui-widget-header .ui-state-default {
+	text-shadow: 0 0px 0 rgba(255, 255, 255, 0)
+}
+
+/* color del modal */
+
+/*-----------------------------Cambios Recientes antes del Sprint 1 del miercoles-------------------------*/
+.btn-primary {
+	width: 41%;
+}
+
+.ui-inputfield .ui-widget .ui-state-default .ui-corner-all .hasDatepicker {
+	width: 80%;
+}
+/*MENSAJE CUANDO LA TABLA ESTÁ VACIA*/
+.ui-datalist .ui-datalist-empty-message{
+	background-color: #2C3E50;
+}

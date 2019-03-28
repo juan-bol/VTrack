@@ -1,0 +1,224 @@
+#form\3a j_idt45>div.ui-dialog-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-top.ui-draggable-handle
+	{
+	background: #376d99 !important;
+	color: white !important;
+}
+
+.form-control {
+	width: 150%;
+}
+
+.ui-widget {
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+}
+
+.container {
+	padding: 5px;
+}
+
+i.far.fa-check-square {
+	font-size: 400%;
+}
+
+label {
+	display: inline-block;
+	margin-bottom: .5rem;
+	width: 100%;
+	margin-top: 3%;
+}
+
+.h1, h1 {
+	text-align: center !important;
+	color: white !important;
+	font-size: 2.5rem;
+}
+
+.ui-inputfield {
+	margin: 0;
+	outline: medium none;
+	padding: 4px;
+	font-weight: 100;
+	width: 255px;
+}
+
+.perfil-expres {
+	border: groove !important;
+}
+
+.card-body {
+	display: inline-flex;
+	margin-left: 16%;
+	margin-top: 1%;
+	padding: 0% !important;
+}
+
+div.informacion_expres {
+	width: 98%;
+}
+
+div#infoPersonal {
+	padding: 2%;
+	float: left;
+	margin-left: -19%;
+	border: groove;
+	width: 58%;
+}
+
+div#infoResidencia {
+	padding: 2%;
+	float: right;
+	margin-left: 1%;
+	width: 60%;
+	border: groove;
+}
+
+div#infoExpres {
+	border: groove;
+	padding: 1.8%;
+}
+
+.campos {
+	width: 52px !important;
+}
+
+div#acciones {
+	padding: 3%;
+	margin-left: 31%;
+	display: inline-flex;
+}
+
+div#mensajes-error {
+	float: right;
+	margin-left: 50%;
+}
+
+#btn-crear {
+	padding: 5%;
+	margin-left: 10%;
+}
+
+#btn-cancelar {
+	padding: 5%;
+	margin-left: 10%;
+}
+
+.jumbotron-fluid {
+	padding-right: 0;
+	padding-left: 0;
+	border-radius: 0;
+	background-color: #3c77aa;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item {
+	color: black;
+	background: white;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item {
+	border: 0 none;
+	margin: 1px 0;
+	padding: 3px 5px;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-item {
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.ui-selectonemenu {
+	display: inline-block;
+	position: relative;
+	width: auto;
+	zoom: 1;
+	cursor: pointer;
+	padding-right: 0em;
+	font-size: 50%;
+	vertical-align: top;
+}
+
+.ui-accordion .ui-accordion-content {
+	padding: 0em;
+	border-top: 0;
+	margin-top: -2px;
+	position: relative;
+	top: 1px;
+	margin-bottom: 2px;
+	overflow: auto;
+	zoom: 1;
+}
+
+.satisfactorio {
+	background-color: green;
+}
+
+div.ui-dialog-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-top.ui-draggable-handle
+	{
+	background-color: #2c3e50;
+}
+
+.ui-draggable .ui-dialog-titlebar {
+	cursor: move;
+	background: white;
+}
+
+.ui-dialog .ui-dialog-title {
+	color: white;
+	float: left;
+	margin: .3em 16px .1em 0;
+}
+
+.ui-dialog .ui-dialog-content {
+	position: relative;
+	border: 0;
+	padding: .5em 1em;
+	background: white;
+	zoom: 1;
+	color: black;
+	width: auto;
+}
+
+.ui-dialog-content.ui-widget-content {
+	width: 300px;
+	height: 200px;
+	overflow: unset;
+}
+
+.ui-accordion-header {
+	background-color: #7096ab !important;
+	color: black !important;
+	width: 100%;
+}
+
+.ui-widget-content {
+	/* background-color: #2c3e50; */
+	color: white;
+	border: none;
+}
+
+.ui-dialog-content.ui-widget-content {
+	text-align: center;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default {
+	background: white;
+}
+
+.ui-dialog, .ui-dialog-title {
+	text-shadow: none;
+	color: white;
+}
+
+.ui-widget {
+	font-family: Arial, sans-serif;
+	font-size: 0.95em;
+	color: black;
+}
+
+.ui-dialog .ui-dialog-footer {
+	padding: .4em 1em;
+	border-width: 1px 0 0 0;
+	text-align: center;
+}

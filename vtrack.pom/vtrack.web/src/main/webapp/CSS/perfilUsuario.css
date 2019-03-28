@@ -1,0 +1,268 @@
+.h1, h1 {
+	text-align: center !important;
+	color: white !important;
+	font-size: 2.5rem;
+}
+
+.ui-spinner-input {
+	width: 107px !important;
+}
+
+.ui-dialog-content.ui-widget-content {
+	text-align: center;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default,
+	.ui-state-default {
+	background-color: white;
+}
+
+#form\3a accordion\3a j_idt33 {
+	width: 106%;
+	margin_left: -14%;
+	margin-left: -1%;
+}
+
+#form\3a accordion>div.ui-accordion-header.ui-helper-reset.ui-state-default.ui-state-active.ui-corner-top
+	{
+	width: 100%;
+}
+
+.h5, h5 {
+	font-size: 1.25rem;
+	color: black !important;
+}
+
+#form\3a accordion1\3a j_idt31 {
+	margin-left: -1%;
+	width: 108%;
+}
+
+.boton-aceptar {
+	margin-left: 34%;
+}
+
+#form\3a j_idt60>span {
+	BACKGROUND: GREEN;
+}
+
+.display-4 {
+	font-size: 3.5rem;
+	font-weight: 300;
+	margin-top: -4%;
+	line-height: 1.2;
+}
+
+.form-control:disabled, .form-control[readonly] {
+	background-color: #e9ecef;
+	opacity: 0.35 !important;
+}
+
+.ui-spinner {
+	width: 100px;
+}
+
+.cuenta-asociada {
+	padding: 2%;
+}
+
+.jumbotron-fluid {
+	padding-right: 0;
+	padding-left: 0;
+	border-radius: 0;
+	height: 0;
+}
+
+.ui-accordion-header {
+	background-color: #7096ab !important;
+	color: black;
+	width: 102.3%;
+}
+
+.ui-accordion-content {
+	background-color: white !important;
+	padding: 11px !important;
+	width: 102.7%;
+}
+
+.ui-state-disabled {
+	opacity: .35;
+}
+
+.form-control {
+	width: 150%;
+}
+
+.ui-inputtext {
+	color: black !important;
+}
+
+.hasDatepicker {
+	color: black !important;
+}
+
+.ui-inputfield {
+	margin: 0;
+	outline: medium none;
+	padding: 4px;
+	font-weight: 100;
+	width: 300px;
+	background-color: white !important;
+	color: black;
+}
+
+.ui-widget {
+	color: black;
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+}
+
+.form-control {
+	color: black;
+}
+
+ui-selectonemenu-trigger {
+	background-color: #c4c4c4 !important;
+	color: #c4c4c4 !important;
+}
+
+.jumbotron-fluid {
+	padding-right: 0;
+	padding-left: 0;
+	border-radius: 0;
+	background-color: #3c77aa;
+	height: 180px;
+}
+
+.ui-widget {
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+}
+
+label {
+	width: 100%;
+}
+
+.cuenta-asociada.ui-g {
+	margin: 7.5%;
+	margin-left: 37%;
+}
+
+div#acciones {
+	padding: 3%;
+	margin-left: 31%;
+	display: inline-flex;
+}
+
+#btn-crear {
+	padding: 5%;
+	margin-left: 10%;
+}
+
+.ui-spinner-input {
+	width: 500px;
+}
+
+#btn-cancelar {
+	padding: 5%;
+	margin-left: 10%;
+}
+
+.perfil-expres {
+	border: groove;
+}
+
+.ui-chkbox-box {
+	margin-left: 28px;
+}
+
+#notificar {
+	display: inline-block;
+}
+
+.ui-spinner-input {
+	width: 300px;
+}
+
+.notificaciones {
+	border: groove;
+	width: 100%;
+}
+
+.form-control {
+	width: 150%;
+}
+
+div#infoPersonal {
+	padding: 1%;
+	float: left;
+	border: groove;
+	margin-left: -0.7%;
+}
+
+div#infoPersonal-cuenta {
+	padding: 1%;
+	float: left;
+	border: groove;
+	width: 47.5%;
+	margin-left: -1%;
+}
+
+div#infoResidencia {
+	padding: 1%;
+	float: right;
+	width: 49.7%; margin-left : 1%;
+	border: groove;
+	margin-left: 1%;
+}
+
+div#infoExpres {
+	padding: 1%;
+	display: -webkit-inline-box;
+}
+
+div#infoExpres2 {
+	padding: 2%;
+	display: -webkit-inline-box;
+}
+
+div#panel-notificacion {
+	padding: 2%;
+}
+
+#form\3a boton_modificar {
+	margin-left: 55%;
+}
+
+div#acciones {
+	padding: 0%;
+	/* margin-left: 43%;*/
+	margin-top: 3%;
+	text-align: center;
+}
+
+.ui-inputfield {
+	margin: 0;
+	outline: medium none;
+	padding: 4px;
+	font-weight: 100;
+	width: 255px;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item {
+	color: black;
+	background: white;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item {
+	border: 0 none;
+	margin: 1px 0;
+	padding: 3px 5px;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-item {
+	font-weight: normal;
+	cursor: pointer;
+}

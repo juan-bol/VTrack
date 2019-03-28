@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+	<title>V-Track</title>
+
+	<!--CSS del menu-->
+	<link rel="stylesheet" href="../CSS/sidebarw3.css" />
+
+	<!--  Css de NB permisosRecibidos -->
+	<link rel="stylesheet" href="../CSS/permisosRecibidos.css" />
+
+
+	<!--CSS de carné de vacunación-->
+	<link rel="stylesheet" href="../CSS/carneVacunacion.css" />
+
+	<!-- CSS de esquemas sugeridos  -->
+	<link rel="stylesheet" href="../CSS/esquemasSugeridos.css" />
+
+	<!-- css del header -->
+	<link rel="stylesheet" href="../CSS/headerInApp.css" />
+
+	<!-- css del footer -->
+	<link rel="stylesheet" href="../CSS/footer.css" />
+
+	<!-- css del Perfil -->
+	<link rel="stylesheet" href="../CSS/perfilUsuario.css" />
+
+	<!-- css del Centros de vacunación -->
+	<link rel="stylesheet" href="../CSS/centrosVacunacion.css" />
+
+	<!-- css del compartir carne -->
+
+	<link rel="stylesheet" href="../CSS/compartirCuenta.css" />
+
+	<!-- css de bootstrap -->
+	<link rel="stylesheet" href="../CSS/bootstrap.min.css" />
+
+	<!-- ÍCONOS FONT_AWESOME -->
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+		integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+		crossorigin="anonymous" />
+</h:head>
+
+<h:body>
+
+	<!-- Menú  -->
+	<div class="sidebar" id="mySidebar" style="display: none">
+		<ui:include src="menu.xhtml"></ui:include>
+	</div>
+	
+	<!-- Header - parte superior -->
+  <div>
+    <ui:include src="../facelets/headerInApp.xhtml"></ui:include>
+  </div>
+	
+	<!-- Contenido -->
+  <div id="contenido">
+    <!-- Contenido que cambia  (esquemasSugeridos, carné, etc) -->
+    <ui:insert name="content">
+      <!-- Aquí se inserta el contenido que usa el template, e.g. gestionEsquemasSugeridos, gestionCarneVacunacion, etc -->
+    </ui:insert>
+  </div>
+  
+  <div>
+	  <!-- Footer - parte inferior  -->
+	  <ui:include src="../facelets/footer.xhtml"></ui:include>  
+  </div>
+
+	<!--script necesario para el funcionamiento del menú-->
+	<script type="text/javascript" src="../JS/sidebarw3.js"></script>
+
+	<!--script de bootstrap-->
+	<script type="text/javascript" src="../JS/bootstrap.min.js"></script>
+</h:body>
+</html>

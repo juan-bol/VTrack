@@ -1,0 +1,261 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<ui:composition template="/facelets/inAppTemplate.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+				<h:outputScript library="js" name="calendar_es.js" />
+				<div class="container-fluid">
+					<h1 style="height: 110px;">Carné de Vacunación</h1>
+					<div style="min-height: 57.7%">
+
+						<p:outputPanel rendered="#{carneVacunacionNB.render_mensaje}">
+							<div class="row"
+								style="text-align: center; font-weight: bold; font-size: 20px; border: solid 2px; margin: 20 0 20 0; width: 79%; margin-left: 7%; padding: 15px">
+								<div class="col" style="max-width: 20%; text-align: right;">
+									<i class="fas fa-info-circle"
+										style="font-size: 60px; color: steelblue"></i>
+								</div>
+								<div class="col" style="max-width: 80%; padding-top: 15px;">
+									<p:outputLabel
+										value="#{carneVacunacionNB.nombre_cuenta} te ha compartido este carné solo para visualizarlo."></p:outputLabel>
+								</div>
+							</div>
+						</p:outputPanel>
+
+						<p:dataList value="#{carneVacunacionNB.listaEsq}" var="esquema"
+							type="definition"
+							emptyMessage="Aún no se ha agregado esquemas al carné de vacunación.">
+
+							<div class="accordion" id="accordionExample">
+								<div class="card">
+									<div class="card-header" id="headingOne">
+										<h5 class="mb-0">
+											<button class="btn btn-link" type="button"
+												data-toggle="collapse"
+												data-target="##{esquema.identificador}" aria-expanded="true"
+												aria-controls="esquema.identificador">
+												<h4>#{esquema.esquema.nombre}</h4>
+											</button>
+										</h5>
+									</div>
+									<div id="#{esquema.identificador}" class="collapse show"
+										aria-labelledby="headingOne" data-parent="#accordionExample">
+										<div class="card-body">
+											<p class="text-center" style="font-size: 22px">
+												<strong>#{esquema.esquema.descripcion}</strong>
+											</p>
+											<p:dataTable var="columnasDosis" value="#{esquema.columnas}"
+												class="table table-hover rtable rtable--flip"
+												style=" width: 100%">
+												<!--   Columna nombre vacuna-->
+												<p:column styleClass="dosisoRefuerzo"
+													style="text-align: -webkit-auto;"
+													headerText="Dosis o Refuerzo">
+													<h:outputText value="#{columnasDosis[0].nombreVacuna}" />
+												</p:column>
+												<!-- Columnas creadas dinámicamente -->
+												<p:columns value="#{esquema.cabeceras}"
+													columnIndexVar="colIndex" var="cabecera">
+													<f:facet name="header">
+														<h:outputText value="#{cabecera.nombre}" />
+													</f:facet>
+													<div id="dosis">
+														<!-- Se crea un panelgroup para evitar que los campos de algunas dosis que no corresponden a la vacuna de la fila, no se llene -->
+														<h:panelGroup
+															rendered="#{not empty columnasDosis[cabecera.posicion].dosis.diaAplicacion}">
+															<!-- Circulo de opcion para aplicar dosis-->
+															<p:commandButton styleClass="boton" value=""
+																update="form"
+																style="width: 10px; margin-left: 50%;background-color:#{carneVacunacionNB.darColorBoton(columnasDosis[cabecera.posicion])}"
+																action="#{carneVacunacionNB.accionMostrarDialogoGestionDosis}"
+																disabled="#{!(columnasDosis[cabecera.posicion].puedeAplicarse) or carneVacunacionNB.bloquer_funcionalidad}">
+																<f:setPropertyActionListener
+																	target="#{carneVacunacionNB.dosisAAplicar}"
+																	value="#{columnasDosis[cabecera.posicion]}" />
+																<f:setPropertyActionListener
+																	target="#{carneVacunacionNB.dosisSeleccionada}"
+																	value="#{cabecera.nombre}" />
+																<f:setPropertyActionListener
+																	target="#{carneVacunacionNB.listaDosisDTO}"
+																	value="#{columnasDosis}" />
+															</p:commandButton>
+															<div id="textTable">
+																<!-- Vacunas que se estiman de acuerdo a la fecha de aplicacion -->
+																<h:outputText
+																	value="#{columnasDosis[cabecera.posicion].fechaAplicacion}" />
+															</div>
+														</h:panelGroup>
+													</div>
+												</p:columns>
+												<!-- COLUMNA DE ACCIONES -->
+												<p:column headerText="Acciones">
+													<!--   Botón de mostar inf -->
+													<p:commandButton update=":form:vacDetail"
+														oncomplete="PF('vacDialog').show()"
+														action="#{carneVacunacionNB.mostrarInformacionVacuna}"
+														icon="fa fa-info" title="View"
+														style="background-color:#56a5ff">
+														<f:setPropertyActionListener
+															target="#{carneVacunacionNB.vacunaTmp}"
+															value="#{columnasDosis[0].dosis.vacunaEsquema.vacuna}" />
+														<f:setPropertyActionListener
+															target="#{carneVacunacionNB.vacEsqTmp}"
+															value="#{columnasDosis[0].dosis.vacunaEsquema}" />
+													</p:commandButton>
+													<!--   Botón de borrar vacuna-->
+													<p:growl id="growl" life="3000" />
+													<p:commandButton oncomplete="PF('confirmarDialogo').show()"
+														update="form" icon="fa fa-trash" title="Eliminar Vacuna"
+														disabled="#{carneVacunacionNB.bloquer_funcionalidad}"
+														style="background-color:red">
+														<f:setPropertyActionListener
+															target="#{carneVacunacionNB.vacunaBorrar}"
+															value="#{columnasDosis[0].dosis.vacunaEsquema.vacuna}" />
+														<f:setPropertyActionListener
+															target="#{carneVacunacionNB.esquemaSeleccionado}"
+															value="#{esquema.esquema}" />
+													</p:commandButton>
+												</p:column>
+											</p:dataTable>
+										</div>
+									</div>
+								</div>
+							</div>
+						</p:dataList>
+						<div style="margin-top: 20%;">
+							<p:commandLink ajax="false"
+								action="#{carneVacunacionNB.irAEsquemasSugeridos}"
+								rendered="#{carneVacunacionNB.listaEsq.isEmpty()}">
+								<h:outputText
+									value="Click para agregar esquemas a su carné de vacunación">
+								</h:outputText>
+							</p:commandLink>						
+						</div>
+					</div>
+				</div>
+
+				<!-- dialogo de confirmar borrar la vacuna -->
+				<p:dialog header="Borrar vacuna" widgetVar="confirmarDialogo"
+					position="top" resizable="false" width="250" height="100"
+					modal="true" showEffect="fade" hideEffect="fade">
+
+					<div class="row">
+						<div class="col">
+							<h:outputLabel
+								value="¿Está seguro que desea eliminar la vacuna seleccionada?" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-" style="position: relative; left: 18%;">
+							<p:commandButton value="Sí" update="form"
+								style="background-color: #46CE73; margin: 12.5px"
+								action="#{carneVacunacionNB.borrarVacunaSeleccionada}" />
+							<p:commandButton value="No"
+								action="#{carneVacunacionNB.cerrarConfirmacion}"
+								style="background-color: #FF3D3D; margin: 12.5px;" />
+						</div>
+					</div>
+				</p:dialog>
+
+				<!-- Dialogo de mostrar información vacuna -->
+				<p:dialog header="Información vacuna" id="tabla-modal"
+					widgetVar="vacDialog" modal="true" showEffect="fade"
+					hideEffect="fade" width="40%" resizable="false" position="top">
+					<p:outputPanel id="vacDetail" style="text-align:justify;"
+						columnClasses="label,value">
+						<h:outputText value="Nombre vacuna: "
+							style="font-weight:bold; color:black" />
+						<h:outputText value="#{carneVacunacionNB.vacunaTmp.nombre}" />
+						<br />
+						<h:outputText value="Cantidad de dosis: "
+							style="font-weight:bold; color:black" />
+						<h:outputText value="#{carneVacunacionNB.numDosis}" />
+						<br />
+						<h:outputText value="Cantidad de refuerzos: "
+							style="font-weight:bold; color:black" />
+						<h:outputText value="Ninguna"
+							rendered="#{carneVacunacionNB.numRefuerzos == 0}" />
+						<h:outputText value="#{carneVacunacionNB.numRefuerzos}"
+							rendered="#{carneVacunacionNB.numRefuerzos > 0}" />
+						<br />
+						<h:outputText value="Información General:"
+							style="font-weight:bold; color:black" />
+						<h:outputText
+							value="#{carneVacunacionNB.vacunaTmp.vacunaDetalle.informacionGeneral}" />
+					</p:outputPanel>
+				</p:dialog>
+
+				<!-- Dialogo de registrar dosis -->
+				<p:dialog header="Registrar Dosis" widgetVar="dialogoRegistrarDosis"
+					width="400px" dynamic="true" resizable="false" modal="true"
+					closable="false" height="200" showEffect="fade" hideEffect="fade"
+					position="top">
+					<p:outputPanel id="dosisDetail" style="padding: 0px;">
+						<div class="row">
+							<div class="col-md">
+								<h:outputLabel
+									value="Registrar #{carneVacunacionNB.dosisSeleccionada} de #{carneVacunacionNB.dosisAAplicar.nombreVacuna}" />
+								<p:separator style="margin: 5px 0px;" />
+							</div>
+						</div>
+						<div style="margin: 10px;">
+							<div class="row">
+								<div class="col-" style="padding: 0;">
+									<h:outputLabel
+										value="Registrar #{carneVacunacionNB.dosisSeleccionada}"
+										for="switchRegistrar" style="margin: 5.5px;" />
+								</div>
+								<div class="col-" style="margin-left: 20px;">
+									<p:selectBooleanCheckbox
+										value="#{carneVacunacionNB.switchRegistrarDosis}"
+										id="switchRegistrar" style="margin-top: 7px;"
+										styleClass="MiCheckBox">
+										<p:ajax
+											listener="#{carneVacunacionNB.actualizarDisposicionCalendario}"
+											update="calendarioFechaAplicacion" />
+									</p:selectBooleanCheckbox>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-">
+									<h:outputLabel for="calendarioFechaAplicacion"
+										value="Fecha de Aplicación" style="margin: 5.5px;" />
+								</div>
+								<div class="col-md-6" style="padding: 0px;">
+									<p:calendar id="calendarioFechaAplicacion"
+										value="#{carneVacunacionNB.fechaAplicacion}"
+										disabled="#{carneVacunacionNB.calendarioActivo}"
+										showOn="button" locale="es" navigator="true"
+										pattern="dd-MM-yyyy" />
+
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-" style="position: relative; left: 18%;">
+									<p:commandButton value="Confirmar" update="form"
+										style="background-color: #46CE73; margin: 12.5px"
+										action="#{carneVacunacionNB.accionDialogoConfirmar}"></p:commandButton>
+									<p:commandButton value="Cancelar"
+										action="#{carneVacunacionNB.cerrarDialogo}"
+										style="background-color: #FF3D3D; margin: 12.5px;"></p:commandButton>
+								</div>
+							</div>
+						</div>
+					</p:outputPanel>
+				</p:dialog>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

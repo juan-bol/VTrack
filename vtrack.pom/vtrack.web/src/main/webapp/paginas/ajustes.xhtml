@@ -1,0 +1,323 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="/facelets/inAppTemplate.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+				<h:outputScript library="js" name="calendar_es.js" />
+				<p:growl id="msgs" />
+				<div class="container-fluid">
+
+					<div class="container-fluid">
+						<h1 style="font-size: 70px;">Perfil</h1>
+
+						<div style="display: #{(perfilUsuarioNB.render_vista)?'':'none'}">
+
+							<div class="perfil-expres"
+								style="display: #{(perfilUsuarioNB.bloquear_boton)?'':'none'}">
+								<div class="informacion_expres ui-g">
+
+									<div id="infoExpres" class="ui-g-6"
+										style="display: #{(perfilUsuarioNB.bloquear_boton)?'-webkit-inline-box':'none'}">
+
+										<h:panelGrid columns="2" cellpadding="5" id="ingresoExpres"
+											rendered="#{perfilUsuarioNB.bloquear_boton}">
+											<p:outputLabel value="Correo electrónico * : "></p:outputLabel>
+											<p:inputText id="email" disabled="true"
+												style="width:300px;font-size: 16px;"
+												value="#{perfilUsuarioNB.correoElectronico}">
+											</p:inputText>
+
+											<p:outputLabel styleClass="campos" value="Contraseña*:"></p:outputLabel>
+											<p:password id="contraseña"
+												style="width:300px;font-size: 16px;"
+												rendered="#{perfilUsuarioNB.bloquear_boton}"
+												value="#{perfilUsuarioNB.contrasenia}" feedback="true"
+												promptLabel="Nivel de seguridad" weakLabel="Debil"
+												goodLabel="Intermedia" strongLabel="Fuerte">
+											</p:password>
+
+
+											<p:outputLabel styleClass="campos"
+												value="Confirmar contraseña*:"></p:outputLabel>
+											<p:password id="confirmar-contraseña"
+												rendered="#{perfilUsuarioNB.bloquear_boton}"
+												style="width:300px;font-size: 16px;" feedback="true"
+												value="#{perfilUsuarioNB.confirmarContrasenia}"
+												promptLabel="Nivel de seguridad" weakLabel="Debil"
+												goodLabel="Intermedia" strongLabel="Fuerte">
+											</p:password>
+
+										</h:panelGrid>
+
+										<div class="cuenta-asociada ui-g">
+											<p:commandButton id="boton_crear_asociada"
+												rendered="#{perfilUsuarioNB.bloquear_boton}"
+												styleClass="btn btn-success" value="Crear usuario asociado"
+												action="#{perfilUsuarioNB.redirigirCuentaAsociada}">
+											</p:commandButton>
+										</div>
+									</div>
+								</div>
+							</div>
+							<p:accordionPanel id="accordion1" multiple="true"
+								style="margin-bottom:20px; width: 97.7%; padding:1px;">
+								<p:tab title="Información personal">
+									<div class="ui-g">
+										<div id="infoPersonal" class="ui-g-6">
+											<h:panelGrid columns="2" cellpadding="5">
+
+												<p:outputLabel value="Nombre: "></p:outputLabel>
+												<p:inputText id="nombre"
+													disabled="#{perfilUsuarioNB.inhabilitar_nombre}"
+													style="width:300px;font-size: 16px;margin-left: 25px;"
+													value="#{perfilUsuarioNB.nombre}">
+
+													<p:ajax listener="#{perfilUsuarioNB.metodoAlerta}"
+														update="form:accordion1:nombre" />
+
+												</p:inputText>
+
+												<p:outputLabel value="Género: "></p:outputLabel>
+												<p:selectOneMenu id="sexo" value="#{perfilUsuarioNB.sexo}"
+													lazy="true"
+													disabled="#{perfilUsuarioNB.inhabilitar_genero}"
+													style="width:300px;font-size: 16px;margin-left: 25px;">
+													<f:selectItem itemLabel="Ingrese género" itemValue="-99999" />
+													<f:selectItems value="#{perfilUsuarioNB.lstGeneros}" />
+													
+													<p:ajax listener="#{perfilUsuarioNB.metodoAlerta}"
+														update="form:accordion1:nombre" />
+														
+												</p:selectOneMenu>
+
+
+												<p:outputLabel id="mensaje-numero2"
+													style="font-size: 16px;margin-left: 33px;"
+													rendered="#{perfilUsuarioNB.render_numero}" value=""></p:outputLabel>
+												<p:outputLabel id="mensaje-numero1"
+													style="font-size: 16px;
+													background-color: #f8b7bd;
+													margin-left: 15px;
+													text-align: center;
+													height: 35px;
+													border: 0 none;
+	    											color: #212121;
+													margin-top: 2%;"
+													rendered="#{perfilUsuarioNB.render_numero}"
+													value="#{perfilUsuarioNB.marcaAgua_tipo}">
+													<i class="fa fa-info-circle"
+														style="font-size: larger; margin-top: inherit;"></i>
+												</p:outputLabel>
+
+												<p:outputLabel value="Tipo documento: "></p:outputLabel>
+												<p:selectOneMenu id="tipo-documento"
+													placeholder="#{perfilUsuarioNB.tipoDocumento_texto}"
+													value="#{perfilUsuarioNB.tipoDocumento}" lazy="true"
+													style="width:300px;font-size: 16px;margin-left: 25px;">
+
+													<p:ajax listener="#{perfilUsuarioNB.activar_numero}"
+														update="form num-documento mensaje-tipo1 mensaje-tipo2" />
+
+													<f:selectItem itemLabel="Ingrese tipo documento"
+														itemValue="-99999" />
+													<f:selectItems
+														value="#{perfilUsuarioNB.listaTipoDocumento}" var="tipo"
+														itemValue="#{tipo.idTipoDocPais}"
+														itemLabel="#{tipo.tipoDocumento.nombre}" />
+												</p:selectOneMenu>
+
+
+												<p:outputLabel id="mensaje-tipo2"
+													style="font-size: 16px;margin-left: 33px;"
+													rendered="#{perfilUsuarioNB.render_tipo}" value=""></p:outputLabel>
+												<p:outputLabel id="mensaje-tipo1"
+													style="font-size: 16px;
+													background-color: #f8b7bd;
+													margin-left: 15px;
+													text-align: center;
+													height: 35px;
+													border: 0 none;
+			    									color: #212121;
+													margin-top: 2%;"
+													rendered="#{perfilUsuarioNB.render_tipo}"
+													value="#{perfilUsuarioNB.marcaAgua_numero}">
+													<i class="fa fa-info-circle"
+														style="font-size: larger; margin-top: inherit;"></i>
+												</p:outputLabel>
+
+												<p:outputLabel value="Número documento: "></p:outputLabel>
+												<p:inputText id="num-documento"
+													value="#{perfilUsuarioNB.numeroDocumento}"
+													styleClass="numero-documento"
+													style="width:300px;font-size: 16px;margin-left: 25px;">
+
+													<p:ajax listener="#{perfilUsuarioNB.activar_tipo}"
+														update="form tipo-documento mensaje-numero1 mensaje-numero2" />
+
+
+												</p:inputText>
+
+												<p:outputLabel value="Fecha nacimiento: "></p:outputLabel>
+												<p:calendar id="fechaNacimiento" locale="es"
+													navigator="true" pattern="dd-MM-yyyy" yearRange="1920:2018"
+													maxdate="#{perfilUsuarioNB.hoy}"
+													disabled="#{perfilUsuarioNB.inhabilitar_fecha}"
+													value="#{perfilUsuarioNB.fechaNacimiento}" showOn="button"
+													style="width:300px;font-size: 16px;margin-left: 25px;">
+												</p:calendar>
+
+											</h:panelGrid>
+										</div>
+										<div id="infoResidencia" class="ui-g-6">
+											<h:panelGrid columns="2" cellpadding="5">
+
+												<p:outputLabel value="País: "></p:outputLabel>
+												<p:selectOneMenu id="paises" value="#{perfilUsuarioNB.pais}"
+													placeholder="#{perfilUsuarioNB.pais_seleccionado}"
+													lazy="true" style="width:300px;font-size: 16px;">
+													<p:ajax listener="#{perfilUsuarioNB.seleccionarRegion}"
+														update="text-region region ciudad" />
+													<f:selectItem itemLabel="Ingrese país" itemValue="-99999" />
+													<f:selectItems value="#{perfilUsuarioNB.listaPaises}"
+														var="pais" itemValue="#{pais.idPais}"
+														itemLabel="#{pais.nombre}" />
+												</p:selectOneMenu>
+
+												<p:outputLabel id="text-region"
+													value="#{perfilUsuarioNB.textoRegion} :"></p:outputLabel>
+												<p:selectOneMenu id="region"
+													placeholder="#{perfilUsuarioNB.region_seleccionada}"
+													value="#{perfilUsuarioNB.region}" lazy="true"
+													style="width:300px;font-size: 16px;">
+
+													<f:selectItem
+														itemLabel="Ingrese #{perfilUsuarioNB.textoRegion_combobox}"
+														itemValue="-99999" />
+													<f:selectItems value="#{perfilUsuarioNB.listaRegiones}"
+														var="region" itemValue="#{region.idRegion}"
+														itemLabel="#{region.nombre}" />
+
+													<p:ajax listener="#{perfilUsuarioNB.seleccionarCiudad}"
+														update="ciudad" />
+												</p:selectOneMenu>
+
+												<p:outputLabel value="Ciudad: "></p:outputLabel>
+												<p:selectOneMenu id="ciudad"
+													placeholder="#{perfilUsuarioNB.ciudad_seleccionada.nombre}"
+													value="#{perfilUsuarioNB.ciudad}" lazy="true"
+													style="width:300px;font-size: 16px;">
+													
+													<p:ajax listener="#{perfilUsuarioNB.metodoAlerta}"
+														update="form:accordion1:nombre" />
+														
+													<f:selectItem itemLabel="Ingrese una ciudad"
+														itemValue="-99999" />
+													<f:selectItems value="#{perfilUsuarioNB.listaCiudades}"
+														var="ciudad" itemValue="#{ciudad.idCiudad}"
+														itemLabel="#{ciudad.nombre}" />
+												</p:selectOneMenu>
+
+												<p:outputLabel value="Código postal: "></p:outputLabel>
+												<p:inputText id="codigo-postal"
+													style="width:300px;font-size: 16px;"
+													value="#{perfilUsuarioNB.codigoPostal}">
+													
+													<p:ajax listener="#{perfilUsuarioNB.metodoAlerta}"
+														update="form:accordion1:nombre" />
+														
+												</p:inputText>
+
+
+											</h:panelGrid>
+										</div>
+									</div>
+								</p:tab>
+							</p:accordionPanel>
+						</div>
+					</div>
+
+					<div class="container-fluid">
+						<h1 style="font-size: 70px;">Notificaciones</h1>
+						<div class="notificaciones"
+							style="display: #{(perfilUsuarioNB.render_vista)?'':'none'}">
+							<div id="notificacion" class="informacion_expres ui-g">
+								<div id="panel-notificacion" class="ui-g-6">
+									<h:panelGrid columns="2" cellpadding="5">
+										<p:outputLabel value="Quiero recibir notificaciones por correo electrónico:"
+											style="width:300px;font-size: 16px;text-align: center;"></p:outputLabel>
+										<p:selectBooleanCheckbox id="ajaxTriState"
+											value="#{perfilUsuarioNB.activar_notificaciones}">
+											<p:ajax listener="#{perfilUsuarioNB.notificarCambio}"
+												update="msgs spinner" />
+										</p:selectBooleanCheckbox>
+
+
+										<p:outputLabel value="Quiero recibir un recordatorio:"
+											style="width:300px;font-size: 16px;text-align: center;"></p:outputLabel>
+										<p:outputPanel id="notificar" style="display: flex">
+											<p:spinner id="spinner" value="#{perfilUsuarioNB.numeroDias}"
+												disabled="#{perfilUsuarioNB.inhabilitar_dias}"
+												style="width:150px;font-size: 16px;padding-left: 28px;"
+												min="0" max="365" />
+											<p:outputLabel value="días antes de la fecha de aplicación."
+												style="width:300px;font-size:16px;margin-left: 12px;"></p:outputLabel>
+										</p:outputPanel>
+
+									</h:panelGrid>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="acciones"
+						style="display: #{(perfilUsuarioNB.render_vista)?'':'none'}">
+						<div id="btn-botones">
+							<p:commandButton id="boton_modificar"
+								styleClass="btn btn-success" value="Guardar Cambios"
+								action="#{perfilUsuarioNB.guardarCambios}" update="form">
+
+								<p:ajax oncomplete="setTimeout(actualizarPagina, 1500)" />
+
+							</p:commandButton>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="container">
+					<p:outputPanel rendered="#{perfilUsuarioNB.render_mensaje}">
+
+						<div class="row"
+							style="text-align: center; font-weight: bold; font-size: 20px; border: solid 2px; margin: 20 0 20 0; width: 79%; margin-left: 7%; padding: 15px">
+
+							<div class="col" style="max-width: 20%; text-align: right;">
+								<i class="fas fa-info-circle"
+									style="font-size: 60px; color: steelblue"></i>
+							</div>
+
+							<div class="col" style="max-width: 80%; padding-top: 15px;">
+								<p:outputLabel
+									value="Estas funcionalidades no están disponibles para este usuario" />
+							</div>
+
+						</div>
+					</p:outputPanel>
+				</div>
+			</h:form>
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

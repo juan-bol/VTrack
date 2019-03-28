@@ -1,0 +1,186 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="/facelets/inAppTemplate.xhtml">
+		<ui:define name="content">
+
+			<h:form id="form">
+				<p:growl id="growl" life="3000" />
+				<div class="container-fluid">
+					<div class="container-fluid">
+						<h1 style="height: 110px;">Permisos Concedidos</h1>
+
+						<p:outputPanel
+							rendered="#{empty permisosRecibidosNB.listPermisosRecibidos and permisosRecibidosNB.usuLogueado}">
+
+							<div class="row"
+								style="text-align: center; font-weight: bold; font-size: 20px; border: solid 2px; margin: 7% 0 20% 0; width: 79%; margin-left: 7%; padding: 20px">
+
+								<div class="col" style="max-width: 20%; text-align: right;">
+									<i class="fas fa-info-circle"
+										style="font-size: 60px; color: steelblue"></i>
+								</div>
+
+								<div class="col" style="max-width: 80%; padding-top: 15px;">
+									<p:outputLabel value="No tiene permisos recibidos actualmente" />
+								</div>
+
+							</div>
+						</p:outputPanel>
+
+						<p:outputPanel rendered="#{!permisosRecibidosNB.usuLogueado}">
+
+							<div class="row"
+								style="text-align: center; font-weight: bold; font-size: 20px; border: solid 2px; margin: 7% 0 20% 0; width: 79%; margin-left: 7%; padding: 20px">
+
+								<div class="col" style="max-width: 20%; text-align: right;">
+									<i class="fas fa-info-circle"
+										style="font-size: 60px; color: steelblue"></i>
+								</div>
+
+								<div class="col" style="max-width: 80%; padding-top: 15px;">
+									<p:outputLabel
+										value="Esta funcionalidad no está disponible al cambiar de usuario" />
+								</div>
+
+							</div>
+						</p:outputPanel>
+
+						<p:outputPanel id="panel"
+							rendered="#{not empty permisosRecibidosNB.listPermisosRecibidos and permisosRecibidosNB.usuLogueado}">
+
+							<div class="repeat"
+								style="overflow-y: scroll; overflow-x: hidden; height: 80%; width: -webkit-fill-available; margin: 0;">
+
+
+								<p:repeat id="repeat" styleClass="repeat" scrollable="true"
+									scrollWidth="70%"
+									value="#{permisosRecibidosNB.listPermisosRecibidos}"
+									var="permiso">
+									<hr />
+									<div style="margin-top: 20px">
+
+										<div class="row">
+
+											<div class="col">
+												<h:panelGrid columns="1">
+
+													<h:outputText value="#{permiso.usuarioDestino.nombre}"
+														rendered="#{permiso.usuarioDestino.nombre != null}" />
+
+													<h:outputText
+														value="#{permiso.usuarioDestino.cuenta.correo}" />
+
+												</h:panelGrid>
+											</div>
+
+											<!-- Sección donde se muestra el tipo de permiso Lectura o Lectura y Escritura -->
+											<div class="col" style="text-align: right">
+
+												<p:outputPanel id="p_eye"
+													rendered="#{permiso.tipoPermiso eq 'L'}">
+													<p:commandButton id="eye" icon="fa fa-eye"></p:commandButton>
+													<p:tooltip id="toolEye" for="eye"
+														value="Permiso de lectura" position="top" />
+												</p:outputPanel>
+
+												<p:outputPanel rendered="#{permiso.tipoPermiso eq 'E'}">
+													<p:commandButton id="edit" icon="fa fa-edit"></p:commandButton>
+													<p:tooltip id="toolEdit" for="edit"
+														value="Permiso de escritura" position="top" />
+												</p:outputPanel>
+
+											</div>
+
+											<div class="col" style="text-align: right; max-width: 140px">
+												<p:commandButton class="btn btn-success"
+													value="#{permiso.estado.estado eq 'EN ESPERA' ? 'Aceptar':'Mostrar'}"
+													id="aceptar" oncomplete="PF('parentescoDialogo').show()"
+													disabled="#{permiso.estado.estado eq 'APROBADO'}">
+
+													<f:setPropertyActionListener
+														target="#{permisosRecibidosNB.permisoModificarTmp}"
+														value="#{permiso}" />
+
+												</p:commandButton>
+											</div>
+
+											<div class="col" style="text-align: right; max-width: 140px">
+												<p:commandButton class="btn btn-danger"
+													value="#{permiso.estado.estado eq 'EN ESPERA' ? 'Ignorar':'Ocultar'}"
+													id="ignorar" action="#{permisosRecibidosNB.ignorarPermiso}"
+													update="form"
+													disabled="#{permiso.estado.estado eq 'IGNORADO'}">
+
+													<f:setPropertyActionListener
+														target="#{permisosRecibidosNB.permisoModificarTmp}"
+														value="#{permiso}" />
+
+													<p:ajax oncomplete="setTimeout(actualizarPagina, 1000)" />
+
+												</p:commandButton>
+											</div>
+
+										</div>
+
+									</div>
+									<hr />
+								</p:repeat>
+							</div>
+						</p:outputPanel>
+
+					</div>
+					<p:dialog header="Nombre de la cuenta"
+						widgetVar="parentescoDialogo" position="top" resizable="false"
+						width="500" height="130" modal="true" showEffect="fade"
+						hideEffect="fade">
+
+						<div class="row">
+							<div class="col">
+								<h:outputLabel
+									value="Parece que la cuenta aún no tiene nombre. 
+										Asigna un nombre para referenciarla fácilmente" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col" style="max-width: 200px; font-weight: bold">
+								<p:outputLabel value="Nombre de cuenta: " />
+							</div>
+							<div class="col" style="width: 50%">
+								<p:inputText value="#{permisosRecibidosNB.nombreCuentaTmp}" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-" style="position: relative; left: 18%;">
+								<p:commandButton value="Guardar y terminar" update="form"
+									style="background-color: #46CE73; margin: 12.5px"
+									action="#{permisosRecibidosNB.agregarNombreCuentaYAprobar}">
+
+									<p:ajax oncomplete="setTimeout(actualizarPagina, 1000)" />
+
+								</p:commandButton>
+								<p:commandButton value="Cancelar"
+									action="#{permisosRecibidosNB.cerrarDialogoParentesco}"
+									style="background-color: #FF3D3D; margin: 12.5px;" />
+							</div>
+						</div>
+					</p:dialog>
+
+				</div>
+			</h:form>
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

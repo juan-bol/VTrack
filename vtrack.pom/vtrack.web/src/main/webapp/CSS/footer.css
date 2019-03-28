@@ -1,0 +1,11 @@
+div#footer {
+	background-color: #2C5050;
+	color: white;
+	text-align: center;
+	left: 0px;
+	bottom: 0px;
+	height: 70px;
+	width: 100%;
+	margin-top: 3%;
+	padding: auto 20px;
+}

@@ -1,0 +1,305 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/facelets/inAppTemplate.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+				<h:outputScript library="js" name="calendar_es.js" />
+				<p:growl id="msgs" />
+				<div class="container">
+
+					<div class="jumbotron jumbotron-fluid"
+						style="background-color: #3c77aa;">
+						<div class="container">
+							<h1 class="display-4">Registrar Cuenta Asociada</h1>
+						</div>
+					</div>
+
+					<div
+						style="display: #{(crearCuentaAsociadaNB.render_vista)?'':'none'}">
+						<div class="perfil-expres ui-g">
+
+
+							<div id="infoExpres2" class="ui-g-6 someclass">
+								<h:panelGrid columns="2" cellpadding="5" id="ingresoExpres">
+									<p:outputLabel value="Nombre*:"></p:outputLabel>
+									<p:inputText id="nombre" style="width:300px;font-size: 18px;"
+										placeholder="Ingresar Nombre"
+										value="#{crearCuentaAsociadaNB.nombre}">
+
+										<p:ajax
+											listener="#{crearCuentaAsociadaNB.habilitarCrearCuenta}"
+											update="boton_crear" />
+
+									</p:inputText>
+
+
+									<p:outputLabel value="Fecha nacimiento*: "></p:outputLabel>
+									<p:calendar id="fechaNacimiento" locale="es" navigator="true"
+										pattern="dd-MM-yyyy" yearRange="1920:2018"
+										styleClass="calendario" maxdate="#{perfilUsuarioNB.hoy}"
+										value="#{crearCuentaAsociadaNB.fecha_Nacimiento}"
+										showOn="button" style="width:255px;font-size: 18px;">
+									</p:calendar>
+
+
+
+									<p:outputLabel value="Género*: "></p:outputLabel>
+									<p:selectOneMenu id="sexo"
+										value="#{crearCuentaAsociadaNB.sexo}"
+										placeholder="Ingresar el genero" lazy="true"
+										style="width:300px;font-size: 18px;">
+
+										<p:ajax
+											listener="#{crearCuentaAsociadaNB.habilitarCrearCuenta}"
+											update="boton_crear" />
+
+										<f:selectItem itemLabel="Ingresar género" itemValue="" />
+										<f:selectItems value="#{crearCuentaAsociadaNB.lstGeneros}" />
+
+									</p:selectOneMenu>
+
+
+									<p:outputLabel value="Nombre Cuenta*:"></p:outputLabel>
+									<p:inputText id="parentezco"
+										placeholder="Ingresar nombre de cuenta"
+										style="width:300px;font-size: 18px;"
+										value="#{crearCuentaAsociadaNB.parentezco}">
+
+										<p:ajax
+											listener="#{crearCuentaAsociadaNB.habilitarCrearCuenta}"
+											update="boton_crear" />
+
+									</p:inputText>
+
+								</h:panelGrid>
+							</div>
+
+						</div>
+
+						<p:accordionPanel id="accordion" multiple="true" toggleable="true"
+							style="margin-bottom:20px;">
+							<p:tab title="Información personal"
+								titleStyle="background-color: back;">
+								<div class="ui-g">
+
+									<div id="infoPersonal-cuenta" class="ui-g-6">
+
+										<h:panelGrid columns="2" cellpadding="5">
+
+
+											<p:outputLabel id="mensaje-numero2"
+												style="font-size: 16px;margin-left: 33px;"
+												rendered="#{crearCuentaAsociadaNB.render_numero}" value=""></p:outputLabel>
+											<p:outputLabel id="mensaje-numero1"
+												style="font-size: 16px;
+												background-color: #f8b7bd;
+												margin-left: 15px;
+												text-align: center;
+												height: 35px;
+												border: 0 none;
+    											color: #212121;
+												margin-top: 2%;"
+												rendered="#{crearCuentaAsociadaNB.render_numero}"
+												value="#{crearCuentaAsociadaNB.marcaAgua_tipo}">
+												<i class="fa fa-info-circle"
+													style="font-size: larger; margin-top: inherit;"></i>
+											</p:outputLabel>
+
+											<p:outputLabel value="Tipo documento: "></p:outputLabel>
+											<p:selectOneMenu id="tipo-documento"
+												value="#{crearCuentaAsociadaNB.tipoDocumento}" lazy="true"
+												style="width:300px;font-size: 18px;">
+
+												<p:ajax listener="#{crearCuentaAsociadaNB.activar_numero}"
+													update="form num-documento mensaje-tipo1 mensaje-tipo2" />
+
+												<f:selectItem itemLabel="Ingresar tipo de documento"
+													itemValue="-99999" />
+												<f:selectItems
+													value="#{crearCuentaAsociadaNB.listaTipoDocumento}"
+													var="tipo" itemValue="#{tipo.idTipoDocPais}"
+													itemLabel="#{tipo.tipoDocumento.nombre}" />
+											</p:selectOneMenu>
+
+											<p:outputLabel id="mensaje-tipo2"
+												style="font-size: 16px;margin-left: 33px;"
+												rendered="#{crearCuentaAsociadaNB.render_tipo}" value=""></p:outputLabel>
+											<p:outputLabel id="mensaje-tipo1"
+												style="font-size: 16px;
+												background-color: #f8b7bd;
+												margin-left: 15px;
+												text-align: center;
+												height: 35px;
+												border: 0 none;
+		    									color: #212121;
+												margin-top: 2%;"
+												rendered="#{crearCuentaAsociadaNB.render_tipo}"
+												value="#{crearCuentaAsociadaNB.marcaAgua_numero}">
+												<i class="fa fa-info-circle"
+													style="font-size: larger; margin-top: inherit;"></i>
+											</p:outputLabel>
+
+
+											<p:outputLabel value="Número documento: "></p:outputLabel>
+											<p:inputText id="num-documento"
+												style="width:300px;font-size: 18px;"
+												value="#{crearCuentaAsociadaNB.numeroDocumento}">
+
+												<p:ajax listener="#{crearCuentaAsociadaNB.activar_tipo}"
+													update="form tipo-documento mensaje-numero1 mensaje-numero2" />
+
+											</p:inputText>
+
+											<p:watermark for="num-documento"
+												value="Ingresar número documento" />
+											<p:watermark for="tipo-documento"
+												value="Ingresar TipoDocumento" />
+
+										</h:panelGrid>
+									</div>
+
+									<div id="infoResidencia" class="ui-g-6">
+
+										<h:panelGrid columns="2" cellpadding="5">
+											<p:outputLabel value="Pais: "></p:outputLabel>
+											<p:selectOneMenu id="paises"
+												value="#{crearCuentaAsociadaNB.pais}" lazy="true"
+												style="width:300px;font-size: 18px;margin-left: 33px;">
+
+												<p:ajax
+													listener="#{crearCuentaAsociadaNB.seleccionarRegion}"
+													update="text-region region" />
+
+												<f:selectItem itemLabel="Ingresar pais" itemValue="-99999" />
+												<f:selectItems value="#{crearCuentaAsociadaNB.listaPaises}"
+													var="pais" itemValue="#{pais.idPais}"
+													itemLabel="#{pais.nombre}" />
+											</p:selectOneMenu>
+
+
+											<p:outputLabel id="text-region"
+												value="#{crearCuentaAsociadaNB.textoRegion}"></p:outputLabel>
+											<p:selectOneMenu id="region"
+												value="#{crearCuentaAsociadaNB.region}" lazy="true"
+												style="width:300px;font-size: 18px;margin-left: 33px;">
+												<p:ajax
+													listener="#{crearCuentaAsociadaNB.seleccionarCiudad}"
+													update="ciudad" />
+
+												<f:selectItem itemLabel="Ingresar región" itemValue="-99999" />
+												<f:selectItems
+													value="#{crearCuentaAsociadaNB.listaRegiones}" var="region"
+													itemValue="#{region.idRegion}" itemLabel="#{region.nombre}" />
+											</p:selectOneMenu>
+
+
+											<p:outputLabel value="Ciudad: "></p:outputLabel>
+											<p:selectOneMenu id="ciudad"
+												value="#{crearCuentaAsociadaNB.ciudad}" lazy="true"
+												style="width:300px;font-size: 18px;margin-left: 33px;">
+												<f:selectItem itemLabel="Ingresar ciudad" itemValue="-99999" />
+												<f:selectItems
+													value="#{crearCuentaAsociadaNB.listaCiudades}" var="ciudad"
+													itemValue="#{ciudad.idCiudad}" itemLabel="#{ciudad.nombre}" />
+											</p:selectOneMenu>
+
+
+
+											<p:outputLabel value="Código postal: "></p:outputLabel>
+											<p:inputText id="codigo-postal"
+												placeholder="Ingresar el código postal"
+												style="width:300px;font-size: 18px;margin-left: 33px;"
+												value="#{crearCuentaAsociadaNB.codigoPostal}">
+
+											</p:inputText>
+										</h:panelGrid>
+									</div>
+								</div>
+							</p:tab>
+						</p:accordionPanel>
+
+
+						<div id="acciones">
+							<div id="btn-crear">
+								<p:commandButton id="boton_crear" styleClass="btn btn-success"
+									value="Crear Cuenta"
+									disabled="#{crearCuentaAsociadaNB.habilitarBoton}"
+									action="#{crearCuentaAsociadaNB.realizarRegistro}"
+									update="form">
+
+
+								</p:commandButton>
+							</div>
+							<div id="btn-cancelar">
+								<p:commandButton styleClass="btn btn-danger" value="Cancelar"
+									action="#{crearCuentaAsociadaNB.redirigirPerfilUsuario}" />
+							</div>
+
+						</div>
+					</div>
+
+
+				</div>
+
+				<!-- Mensaje que se muestra cuando se cambia de usuario y el mismo es impersonate -->
+				<div class="container">
+					<p:outputPanel rendered="#{!permisosRecibidosNB.usuLogueado}">
+
+						<div class="row"
+							style="text-align: center; font-weight: bold; font-size: 20px; border: solid 2px; margin: 20 0 20 0; width: 79%; margin-left: 7%; padding: 15px">
+
+							<div class="col" style="max-width: 20%; text-align: right;">
+								<i class="fas fa-info-circle"
+									style="font-size: 60px; color: steelblue"></i>
+							</div>
+
+							<div class="col" style="max-width: 80%; padding-top: 15px;">
+								<p:outputLabel
+									value="Esta funcionalidad no está disponible para este usuario" />
+							</div>
+
+						</div>
+					</p:outputPanel>
+				</div>
+
+
+				<p:dialog closable="false" resizable="false" modal="true"
+					position="center center" width="300" height="80"
+					header="Información" widgetVar="dialogoRedirigir">
+
+					<h:outputLabel
+						value="Creaste una cuenta asociada satisfactoriamente" />
+
+					<p:commandButton value="Aceptar" styleClass="satisfactorio"
+						style="background-color: green;"
+						action="#{crearCuentaAsociadaNB.redirigirPerfilUsuario}" />
+				</p:dialog>
+
+				<p:dialog closable="false" resizable="false" modal="true"
+					position="center center" width="300" height="80"
+					header="Información" widgetVar="dialogoError">
+
+					<h:outputLabel
+						value="Un usuario asociado no tiene permitido crear otros usuarios asociados" />
+
+					<p:commandButton value="Aceptar" style="background-color: green;"
+						action="#{crearCuentaAsociadaNB.redirigirPerfilUsuario}" />
+				</p:dialog>
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

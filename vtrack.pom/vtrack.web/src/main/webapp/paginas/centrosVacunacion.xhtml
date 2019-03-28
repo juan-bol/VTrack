@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/facelets/inAppTemplate.xhtml">
+		<ui:define name="content">
+			<h:form>
+				<p:growl id="growl" life="3000" />
+
+
+				<h1 style="height: 110px;">Centros de Vacunación</h1>
+
+
+				<script type="text/javascript"
+					src="https://maps.google.com/maps/api/js?key=AIzaSyDGn82Osrtu7Tn3yM5GGtVVDXLj0Wvf3T8"></script>
+
+				<p:gmap
+					center="#{centrosVacunacionNB.latitudMapa}, #{centrosVacunacionNB.longitudMapa}"
+					zoom="12" type="MAP" style="width:100%;height:500px"
+					model="#{centrosVacunacionNB.modeloMapa}">
+
+
+					<p:ajax event="overlaySelect"
+						listener="#{centrosVacunacionNB.marcadorSeleccionado}"
+						update="growl" />
+
+					<p:gmapInfoWindow id="infoWindow">
+						<p:outputPanel style="display: block; margin: auto">
+
+							<p:outputLabel
+								value="#{centrosVacunacionNB.marcadorSeleccionado.title}"
+								style="text-align: center; font-weight: bold" />
+
+							<div class="row">
+								<div class="col">
+									<p:outputLabel value="Teléfono:" style="font-weight: bold" />
+								</div>
+								<div class="col">
+									<p:outputLabel
+										value="#{centrosVacunacionNB.marcadorSeleccionado.data.telefono}" />
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col">
+									<p:outputLabel value="Dirección: " style="font-weight: bold" />
+								</div>
+								<div class="col">
+									<p:outputLabel
+										value="#{centrosVacunacionNB.marcadorSeleccionado.data.direccion}" />
+								</div>
+							</div>
+
+
+						</p:outputPanel>
+					</p:gmapInfoWindow>
+
+				</p:gmap>
+
+				<p:dialog closable="false" resizable="false" modal="true"
+					width="250" height="120" header="Información"
+					positionType="center, center" widgetVar="dialogoNoCentros">
+
+					<h:outputLabel
+						value="No hay centros de vacunación en la ciudad actual, 
+								puede cambiar de ciudad de residencia en la página perfil" />
+
+					<p:commandButton value="Aceptar" styleClass="satisfactorio"
+						style="background-color: green;"
+						action="#{centrosVacunacionNB.cerrarDialogoNoCentros}" />
+				</p:dialog>
+
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
