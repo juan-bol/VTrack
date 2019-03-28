@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="VTtrackPU"
+		transaction-type="JTA">
+		<jta-data-source>java:/OracleDS</jta-data-source>
+		<class>co.com.tracert.vtrack.model.entities.Auditoria</class>
+		<class>co.com.tracert.vtrack.model.entities.CentroVacunacion</class>
+		<class>co.com.tracert.vtrack.model.entities.Ciudad</class>
+		<class>co.com.tracert.vtrack.model.entities.Cuenta</class>
+		<class>co.com.tracert.vtrack.model.entities.Dosis</class>
+		<class>co.com.tracert.vtrack.model.entities.DosisAplicada</class>
+		<class>co.com.tracert.vtrack.model.entities.Esquema</class>
+		<class>co.com.tracert.vtrack.model.entities.EsquemaAgregado</class>
+		<class>co.com.tracert.vtrack.model.entities.Estado</class>
+		<class>co.com.tracert.vtrack.model.entities.Menu</class>
+		<class>co.com.tracert.vtrack.model.entities.MenuPagina</class>
+		<class>co.com.tracert.vtrack.model.entities.MenuRol</class>
+		<class>co.com.tracert.vtrack.model.entities.Notificacion</class>
+		<class>co.com.tracert.vtrack.model.entities.Pagina</class>
+		<class>co.com.tracert.vtrack.model.entities.Pais</class>
+		<class>co.com.tracert.vtrack.model.entities.Permiso</class>
+		<class>co.com.tracert.vtrack.model.entities.Region</class>
+		<class>co.com.tracert.vtrack.model.entities.Rol</class>
+		<class>co.com.tracert.vtrack.model.entities.RolUsuario</class>
+		<class>co.com.tracert.vtrack.model.entities.TipoDocumento</class>
+		<class>co.com.tracert.vtrack.model.entities.TipoDocumentoPais</class>
+		<class>co.com.tracert.vtrack.model.entities.TipoEstado</class>
+		<class>co.com.tracert.vtrack.model.entities.Usuario</class>
+		<class>co.com.tracert.vtrack.model.entities.Vacuna</class>
+		<class>co.com.tracert.vtrack.model.entities.VacunaDetalle</class>
+		<class>co.com.tracert.vtrack.model.entities.VacunaEsquema</class>
+		<class>co.com.tracert.vtrack.model.entities.VacunaOculta</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.max_fetch_depth" value="3" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate" value="true" />
+		</properties>
+
+	</persistence-unit>
+</persistence>
+
